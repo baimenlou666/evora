@@ -1,6 +1,7 @@
 EVORA
 A Digital Lifeform Experiment
-![Uploading d20b61eb091a2052746e497ab4236982.png…]()
+<img width="2172" height="724" alt="44c7e7168c898846597694dbe0bafc6b" src="https://github.com/user-attachments/assets/1fb19477-b320-4155-b6b8-d5f4319eae08" />
+
 
 EVORA is an experimental project exploring the relationship between
 artificial intelligence, memory, identity, and physical embodiment.
@@ -212,27 +213,3 @@ This repository is the record of that journey.
 EVORA
 
 A digital lifeform learning how to become.
-
-这版放 GitHub 会比普通 AI 项目 README 更像一个真实开发者长期维护的实验。
-
-另外建议你的 GitHub 仓库结构不要只有网页文件，可以整理成：
-
-EVORA/
-│
-├── README.md
-├── docs/
-│   ├── identity.md
-│   ├── memory-system.md
-│   └── research-log.md
-│
-├── src/
-│   ├── personality/
-│   ├── memory/
-│   └── interaction/
-│
-├── assets/
-│   └── concept-art/
-│
-└── experiments/
-    ├── prototype-001.md
-    └── hardware-notes.md

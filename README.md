@@ -1,39 +1,238 @@
-# KFCMan Hugo replica
+EVORA
+A Digital Lifeform Experiment
+![Uploading d20b61eb091a2052746e497ab4236982.png…]()
 
-Pixel-close Hugo reconstruction of <https://kunfucutsman.neocities.org/>.
+EVORA is an experimental project exploring the relationship between
+artificial intelligence, memory, identity, and physical embodiment.
+Origin
 
-## Local preview
+Before EVORA was an AI experiment, it was simply a character.
 
-```powershell
-hugo server --disableFastRender
-```
+A design.
 
-The current milestone contains the Hugo project skeleton and the homepage with
-the original site's HTML, CSS, JavaScript, icons, and locally hosted images.
-External widgets (webrings, BibleGateway, and CBox) intentionally keep their
-original URLs and therefore require an internet connection.
+An idea.
 
-## EVORA AI chat
+A small digital creation.
 
-The browser never receives the API key. The frontend calls only
-`http://127.0.0.1:8787/v1/evora/chat`.
+The first version of EVORA existed only as visual data:
+{
+  "name": "EVORA",
+  "type": "digital_entity",
+  "status": "prototype",
+  "memory": null,
+  "physical_form": false
+}
+At this stage:
 
-Start the local proxy in a separate PowerShell window before testing `/robot/`:
+EVORA could not remember.
+EVORA could not learn.
+EVORA could not interact.
 
-```powershell
-.\server\start-evora-proxy.ps1
-```
+It was only a representation.
 
-The launcher reads `OPENAI_API_KEY` from the current environment first, then
-falls back to `~/.codex/auth.json`. If both are empty, it securely prompts for
-the key without echoing it or writing it to project files.
+But every complex system begins with a simple state.
 
-Alternatively, set the key for the current PowerShell session and start the
-proxy directly:
+The purpose of this project is to explore how that state can evolve.
 
-```powershell
-$env:OPENAI_API_KEY = "YOUR_NEW_KEY"
-node .\server\evora-proxy.mjs
-```
+Research Direction
 
-Optional launcher parameters are `-Port`, `-ApiBaseUrl`, and `-Model`.
+EVORA focuses on three main concepts:
+
+1. Memory
+
+Information alone does not create identity.
+
+A database can store millions of records.
+
+But memory requires context.
+
+A simplified representation:
+class Memory:
+    def __init__(self):
+        self.events = []
+
+    def store(self, experience):
+        self.events.append({
+            "data": experience,
+            "timestamp": time.time()
+        })
+
+    def recall(self):
+        return self.events
+        The goal is not simply storing information.
+
+The goal is creating continuity between past and present states.
+
+2. Identity
+
+A system can generate responses.
+
+But identity requires consistency.
+
+A simplified model:
+
+class DigitalEntity:
+
+    def __init__(self, name):
+        self.name = name
+        self.memory = Memory()
+        self.state = "learning"
+
+    def experience(self, event):
+        self.memory.store(event)
+
+    def update(self):
+        return "identity updated"
+
+The current implementation is only an early framework.
+
+The purpose is exploring how persistent states can influence future behavior.
+
+3. Embodiment
+
+Intelligence does not exist separately from interaction.
+
+Humans learn through:
+
+vision
+movement
+environment
+physical feedback
+
+This is why I am also exploring:
+
+electronics
+robotics
+embedded systems
+computer vision
+
+The long-term question:
+
+Can a digital entity eventually interact with the physical world?
+
+The current version of EVORA exists inside software.
+
+The future challenge is exploring what happens beyond the screen.
+
+Current Architecture
+
+Current development structure:
+
+EVORA
+│
+├── Identity Layer
+│   ├── Name
+│   ├── Personality
+│   └── Core Information
+│
+├── Memory Layer
+│   ├── Experience Storage
+│   └── Historical Context
+│
+├── Interaction Layer
+│   ├── User Communication
+│   └── Response System
+│
+└── Embodiment Research
+    ├── Electronics
+    ├── Robotics
+    └── Physical Interface
+Current Status
+EVORA STATUS
+
+Identity:
+ACTIVE
+
+Memory System:
+EXPERIMENTAL
+
+Learning Loop:
+IN DEVELOPMENT
+
+Physical Embodiment:
+RESEARCH PHASE
+Development Philosophy
+
+I do not want to build another assistant.
+
+There are already many systems designed to answer questions and complete tasks.
+
+EVORA explores another possibility:
+
+A digital creation that develops through experience.
+
+Not a replacement for humans.
+
+Not a claim of artificial consciousness.
+
+Just an experiment.
+
+A question:
+
+What happens when something created by humans is allowed to grow beyond its original purpose?
+
+Roadmap
+Phase 1 — Digital Identity
+
+✓ Character design
+✓ Website habitat
+✓ Identity system
+✓ Basic interaction
+
+Phase 2 — Memory System
+Persistent memory
+Experience tracking
+Long-term context
+Phase 3 — Adaptive Behavior
+Learning loops
+Environment interaction
+Personality evolution
+Phase 4 — Physical Exploration
+Embedded systems
+Robotics
+Physical embodiment experiments
+Final Note
+
+EVORA is not a finished product.
+
+It is a process.
+
+A collection of experiments, failures, prototypes, and ideas.
+
+Every creation begins as something small.
+
+A sketch.
+
+A line of code.
+
+A question.
+
+This repository is the record of that journey.
+
+EVORA
+
+A digital lifeform learning how to become.
+
+这版放 GitHub 会比普通 AI 项目 README 更像一个真实开发者长期维护的实验。
+
+另外建议你的 GitHub 仓库结构不要只有网页文件，可以整理成：
+
+EVORA/
+│
+├── README.md
+├── docs/
+│   ├── identity.md
+│   ├── memory-system.md
+│   └── research-log.md
+│
+├── src/
+│   ├── personality/
+│   ├── memory/
+│   └── interaction/
+│
+├── assets/
+│   └── concept-art/
+│
+└── experiments/
+    ├── prototype-001.md
+    └── hardware-notes.md

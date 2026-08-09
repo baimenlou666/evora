@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming on KFCMan's Odd Corner of the Internet</title><link>https://kunfucutsman.neocities.org/tags/programming/</link><description>Recent content in Programming on KFCMan's Odd Corner of the Internet</description><generator>Hugo</generator><language>en-US</language><lastBuildDate>Thu, 16 Jul 2026 14:49:00 -0600</lastBuildDate><atom:link href="https://kunfucutsman.neocities.org/tags/programming/index.xml" rel="self" type="application/rss+xml"/><item><title>Tabulations</title><link>https://kunfucutsman.neocities.org/posts/2026/01/tabulations/</link><pubDate>Thu, 16 Jul 2026 14:49:00 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2026/01/tabulations/</guid><description/></item><item><title>A summary of counting systems</title><link>https://kunfucutsman.neocities.org/posts/2026/03/counting-systems/</link><pubDate>Tue, 14 Jul 2026 22:06:00 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2026/03/counting-systems/</guid><description>&lt;main class="frame main-frame single-margin"&gt;
+ &lt;header&gt;
+ &lt;h1&gt;A summary of counting systems&lt;/h1&gt;
+
+ 
+&lt;div class="article-data"&gt;
+ 
+ &lt;div&gt;
+ 
+ &lt;p&gt;&lt;b&gt;Date:&lt;/b&gt; &lt;time datetime="2026-07-14 22:06:00 -0600 -0600"&gt;Jul 14, 2026&lt;/time&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Tags:&lt;/b&gt; &lt;ul class="inline-list"&gt;
+ &lt;li&gt;&lt;a href="https://kunfucutsman.neocities.org/tags/programming/"&gt;Programming&lt;/a&gt;&lt;/li&gt;
+
+ &lt;li&gt;&lt;a href="https://kunfucutsman.neocities.org/tags/something-i-learnt/"&gt;Something I learnt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;&lt;/div&gt;
+
+ &lt;/div&gt;
+
+
+ &lt;nav id="TableOfContents"&gt;
+ &lt;ul&gt;
+ &lt;li&gt;&lt;a href="#why-use-different-bases"&gt;Why use different bases?&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="#explanation-of-counting-systems"&gt;Explanation of counting systems&lt;/a&gt;
+ &lt;ul&gt;
+ &lt;li&gt;&lt;a href="#how-do-you-convert-between-systems"&gt;How do you convert between systems?&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+ &lt;/li&gt;
+ &lt;li&gt;&lt;a href="#operations"&gt;Operations&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="#but-wait-theres-more"&gt;But wait, there&amp;rsquo;s more!&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/nav&gt;
+ &lt;/header&gt;
+ &lt;article class="content"&gt;&lt;p&gt;Hello! College is still college so I&amp;rsquo;m busy!&lt;/p&gt;
+&lt;p&gt;Want to know what I&amp;rsquo;ve been learning? This is a part of the first of my &lt;strong&gt;Digital Electronics&lt;/strong&gt; subject.&lt;/p&gt;
+&lt;p&gt;I really wanted to write everything down, but seeing as I stop developing blog entries past a certain point, it&amp;rsquo;s better for me to keep it short&lt;/p&gt;</description></item><item><title>Figure Shortcode With Webp</title><link>https://kunfucutsman.neocities.org/posts/2026/01/figure-shortcode-with-webp/</link><pubDate>Thu, 09 Jul 2026 17:38:00 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2026/01/figure-shortcode-with-webp/</guid><description/></item><item><title>MPCG 3: Making a Clickable Board</title><link>https://kunfucutsman.neocities.org/posts/2024/11/mpcg-3-clickable-board/</link><pubDate>Sun, 07 Jun 2026 07:29:18 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2024/11/mpcg-3-clickable-board/</guid><description/></item><item><title>MPCG 2: Setting everything up, actually</title><link>https://kunfucutsman.neocities.org/posts/2024/09/mpcg-2-setting-everything-up/</link><pubDate>Fri, 29 May 2026 14:12:01 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2024/09/mpcg-2-setting-everything-up/</guid><description/></item><item><title>MPCG 1: Explanation of Code</title><link>https://kunfucutsman.neocities.org/posts/2024/08/mpcg-1-explanation-of-code/</link><pubDate>Tue, 12 May 2026 19:21:17 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2024/08/mpcg-1-explanation-of-code/</guid><description/></item><item><title>The Journey to Creating this Website</title><link>https://kunfucutsman.neocities.org/posts/2024/08/journey-to-creating-a-website/</link><pubDate>Wed, 06 May 2026 16:34:56 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2024/08/journey-to-creating-a-website/</guid><description/></item></channel></rss>

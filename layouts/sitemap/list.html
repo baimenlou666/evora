@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{{ partial "head.html" . }}</head>
+<body>
+{{ partial "nav.html" . }}
+<main class="frame main-frame single-margin">
+  <header><h1>Site Map</h1></header>
+  <article class="content">
+    <ul>
+      <li><p><a href="/home/">KFCMan&#39;s Website</a></p>
+        <ul>
+          <li><p><a href="/about-me/">About Me</a> <a href="/about-me/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p>
+            <ul class="inline-list"><li><p><a href="/about-me/somewhere-else/">Find me Somewhere Else</a> <a href="/about-me/somewhere-else/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p></li></ul>
+          </li>
+          <li><p><a href="/posts/">Blog Posts</a> <a href="/posts/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p>
+            <ul>
+              {{ $posts := where .Site.RegularPages "Section" "posts" }}
+              {{ range slice 2024 2025 2026 }}
+                {{ $year := . }}{{ $yearPosts := where $posts "Date.Year" $year }}
+                <li><p><a href="">{{ $year }}</a> <a href="index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p>
+                  <ul class="inline-list">{{ range $yearPosts.ByDate.Reverse }}<li><p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p></li>{{ end }}</ul>
+                </li>
+              {{ end }}
+            </ul>
+          </li>
+          <li><p><a href="/changelog/">Change Log</a></p></li>
+          <li><p><a href="/fun/">KFCMan&#39;s Experiments</a> <a href="/fun/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p>
+            <ul class="inline-list">
+              <li><p><a href="/fun/robot-master-maker/">Robot Master Maker</a></p></li>
+              <li><p><a href="/fun/find-familiar/">Find Familiar (Series)</a> <a href="/fun/find-familiar/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p>
+                <ul class="inline-list">
+                  <li><p><a href="/fun/find-familiar/chapter-04/">Chapter 04</a></p></li>
+                  <li><p><a href="/fun/find-familiar/chapter-03/">Chapter 03</a></p></li>
+                  <li><p><a href="/fun/find-familiar/chapter-02/">Chapter 02</a></p></li>
+                  <li><p><a href="/fun/find-familiar/chapter-01/">Chapter 01</a></p></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><p><a href="/sitemap/">Site Map</a></p></li>
+        </ul>
+      </li>
+      <li><p><a href="/tags/">Search by Tags</a> <a href="/tags/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p>
+        <ul class="inline-list">
+          {{ range slice "Written Too Quickly" "Hugo" "Image Heavy" "Neocities" "Personal" "Written Too Slowly" "Video Gaming" "Christianity" "No tags I guess" "Pai Sho" "Programming" "Right Now" "Something I learnt" "Story Time" "Weather Update" }}
+          <li><p><a href="/tags/{{ . | urlize }}/">{{ . }}</a></p></li>
+          {{ end }}
+        </ul>
+      </li>
+      <li><p><a href="/series/">Search by Series</a> <a href="/series/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p>
+        <ul class="inline-list"><li><p><a href="/series/making-a-pai-sho-capture-game/">Making a Pai Sho Capture Game</a> <a href="/series/making-a-pai-sho-capture-game/index.xml" class="rss-button"><img src="/assets/icons/rss.png" alt="RSS Button"></a></p></li></ul>
+      </li>
+    </ul>
+  </article>
+</main>
+{{ partial "footer.html" . }}
+</body>
+</html>

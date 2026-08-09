@@ -1,0 +1,715 @@
+---
+title: "Making a Bipolar Linear Voltage Source"
+date: 2026-07-27T17:53:00-06:00
+description: "I go into detail the reason I didn’t go insane this summer"
+tags: ["Something I learnt"]
+---
+
+<main class="frame main-frame single-margin">
+        <header>
+            <h1>Making a Bipolar Linear Voltage Source</h1>
+
+            
+<div class="article-data">
+    
+    <div>
+        
+        <p><b>Date:</b> <time datetime="2026-07-27 17:53:00 -0600 -0600">Jul 27, 2026</time></p><p><b>Tags:</b> <ul class="inline-list">
+    <li><a href="/tags/something-i-learnt/">Something I learnt</a></li>
+</ul></p></div>
+
+    </div>
+
+
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#in-theory">In theory</a>
+      <ul>
+        <li><a href="#design-principles">Design principles</a></li>
+        <li><a href="#rectifying-ac-to-dc">Rectifying AC to DC</a></li>
+      </ul>
+    </li>
+    <li><a href="#in-practice">In practice</a>
+      <ul>
+        <li><a href="#the-transformer-used">The transformer used</a></li>
+        <li><a href="#designing-for-a-lower-output-voltage">Designing for a lower output voltage</a></li>
+        <li><a href="#protoboard-prototype">Protoboard prototype</a></li>
+      </ul>
+    </li>
+    <li><a href="#going-from-prototype-to-something-useful">Going from prototype to something useful</a></li>
+  </ul>
+</nav>
+        </header>
+        <article class="content"><p>I&rsquo;ll go straight to the point.</p>
+<p>In my free time I&rsquo;ve been designing a linear voltage source. What&rsquo;s that you
+may ask? It&rsquo;s a type of power source that has the property that it adjusts
+its voltage in a way that <em>linearly</em> mirrors some input, so it&rsquo;s behavior
+looks something like this:</p>
+<blockquote>
+<p><code>V = kX + b</code></p>
+</blockquote>
+<p>Where <code>x</code> is some input and <code>k</code> and <code>b</code> are some constants.</p>
+<p>However I wanted to challenge myself and have the source <em>also be bipolar</em>,
+that is to say, it posseses the ability to provide both positive <em>and negative</em>
+voltage levels. This is useful when you work with operational amplifiers (to
+work with signals that hover around ground levels and not suffer distorsions),
+or in control circuits where some exit needs to be deactivated quickly.
+Finally, I wanted to add a fixed 5V output, since 5V is the voltage used for
+digital electronics.</p>
+<p>Also, I realised Hugo <a href="https://gohugo.io/functions/diagrams/goat/#goat-diagrams">can turn diagrams into SVGs via a library called Goat</a>,
+so you&rsquo;ll be seeing these funny looking block diagrams everywhere in this post.</p>
+<h2 id="in-theory">In theory</h2>
+<h3 id="design-principles">Design principles</h3>
+<p>A voltage source is generally composed of the following components:</p>
+
+
+
+<div class="goat svg-container ">
+	
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			font-family="Menlo,Lucida Console,monospace"
+			
+				viewBox="0 0 576 169"
+			>
+			<g transform='translate(8,16)'>
+<path d='M 32,16 L 104,16' fill='none' stroke='currentColor'></path>
+<path d='M 144,32 L 224,32' fill='none' stroke='currentColor'></path>
+<path d='M 264,32 L 328,32' fill='none' stroke='currentColor'></path>
+<path d='M 368,32 L 448,32' fill='none' stroke='currentColor'></path>
+<path d='M 488,32 L 560,32' fill='none' stroke='currentColor'></path>
+<path d='M 112,48 L 136,48' fill='none' stroke='currentColor'></path>
+<path d='M 232,48 L 256,48' fill='none' stroke='currentColor'></path>
+<path d='M 336,48 L 360,48' fill='none' stroke='currentColor'></path>
+<path d='M 456,48 L 480,48' fill='none' stroke='currentColor'></path>
+<path d='M 144,64 L 224,64' fill='none' stroke='currentColor'></path>
+<path d='M 264,64 L 328,64' fill='none' stroke='currentColor'></path>
+<path d='M 488,64 L 560,64' fill='none' stroke='currentColor'></path>
+<path d='M 368,80 L 448,80' fill='none' stroke='currentColor'></path>
+<path d='M 32,96 L 104,96' fill='none' stroke='currentColor'></path>
+<path d='M 256,96 L 336,96' fill='none' stroke='currentColor'></path>
+<path d='M 344,112 L 416,112' fill='none' stroke='currentColor'></path>
+<path d='M 256,144 L 336,144' fill='none' stroke='currentColor'></path>
+<path d='M 32,16 L 32,96' fill='none' stroke='currentColor'></path>
+<path d='M 104,16 L 104,96' fill='none' stroke='currentColor'></path>
+<path d='M 144,32 L 144,64' fill='none' stroke='currentColor'></path>
+<path d='M 224,32 L 224,64' fill='none' stroke='currentColor'></path>
+<path d='M 256,96 L 256,144' fill='none' stroke='currentColor'></path>
+<path d='M 264,32 L 264,64' fill='none' stroke='currentColor'></path>
+<path d='M 328,32 L 328,64' fill='none' stroke='currentColor'></path>
+<path d='M 336,96 L 336,144' fill='none' stroke='currentColor'></path>
+<path d='M 368,32 L 368,80' fill='none' stroke='currentColor'></path>
+<path d='M 416,96 L 416,112' fill='none' stroke='currentColor'></path>
+<path d='M 448,32 L 448,80' fill='none' stroke='currentColor'></path>
+<path d='M 488,32 L 488,64' fill='none' stroke='currentColor'></path>
+<path d='M 560,32 L 560,64' fill='none' stroke='currentColor'></path>
+<polygon points='144.000000,48.000000 132.000000,42.400002 132.000000,53.599998' fill='currentColor' transform='rotate(0.000000, 136.000000, 48.000000)'></polygon>
+<polygon points='264.000000,48.000000 252.000000,42.400002 252.000000,53.599998' fill='currentColor' transform='rotate(0.000000, 256.000000, 48.000000)'></polygon>
+<polygon points='368.000000,48.000000 356.000000,42.400002 356.000000,53.599998' fill='currentColor' transform='rotate(0.000000, 360.000000, 48.000000)'></polygon>
+<path d='M 416,88 L 416,96' fill='none' stroke='currentColor'></path>
+<polygon points='432.000000,96.000000 420.000000,90.400002 420.000000,101.599998' fill='currentColor' transform='rotate(270.000000, 416.000000, 96.000000)'></polygon>
+<polygon points='488.000000,48.000000 476.000000,42.400002 476.000000,53.599998' fill='currentColor' transform='rotate(0.000000, 480.000000, 48.000000)'></polygon>
+<text text-anchor='middle' x='48' y='68' fill='currentColor' style='font-size:1em'>S</text>
+<text text-anchor='middle' x='56' y='68' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='64' y='52' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='64' y='68' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='72' y='52' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='72' y='68' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='80' y='68' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='88' y='68' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='152' y='52' fill='currentColor' style='font-size:1em'>R</text>
+<text text-anchor='middle' x='160' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='168' y='52' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='176' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='184' y='52' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='192' y='52' fill='currentColor' style='font-size:1em'>f</text>
+<text text-anchor='middle' x='200' y='52' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='208' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='216' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='272' y='52' fill='currentColor' style='font-size:1em'>F</text>
+<text text-anchor='middle' x='272' y='116' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='280' y='52' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='280' y='116' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='280' y='132' fill='currentColor' style='font-size:1em'>I</text>
+<text text-anchor='middle' x='288' y='52' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='288' y='116' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='288' y='132' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='296' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='296' y='116' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='296' y='132' fill='currentColor' style='font-size:1em'>p</text>
+<text text-anchor='middle' x='304' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='304' y='116' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='304' y='132' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='312' y='52' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='312' y='116' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='312' y='132' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='320' y='52' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='320' y='116' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='384' y='52' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='384' y='68' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='392' y='52' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='392' y='68' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='400' y='52' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='400' y='68' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='408' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='408' y='68' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='416' y='52' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='416' y='68' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='424' y='52' fill='currentColor' style='font-size:1em'>g</text>
+<text text-anchor='middle' x='424' y='68' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='432' y='52' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='432' y='68' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='504' y='52' fill='currentColor' style='font-size:1em'>O</text>
+<text text-anchor='middle' x='512' y='52' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='520' y='52' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='528' y='52' fill='currentColor' style='font-size:1em'>p</text>
+<text text-anchor='middle' x='536' y='52' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='544' y='52' fill='currentColor' style='font-size:1em'>t</text>
+</g>
+
+		</svg>
+	
+</div>
+<ol>
+<li><strong>AC Source:</strong> Electricity doesn&rsquo;t come from nowhere, it needs a power source
+where electrons can be forced to produce work. The simplest solution is
+connecting your circuits to the power grid; however this type of electricity
+is both <em>very big</em> and constantly changing direction (that&rsquo;s why it&rsquo;s called
+Alternative Current). A transformer can lower the voltage from the power
+grid to something more managable, though it stays as AC.</li>
+<li><strong>Rectifier:</strong> A rectifier is a type of circuit that converts AC power to DC,
+in other words, it forces current to go in one direction. But a rectifier
+doesn&rsquo;t give you a fixed level of DC, it still fluctuates in intensity.</li>
+<li><strong>Filters:</strong> This part of the circuit is just a big capacitor, its purpose is
+to stabilize the current rectified previously into a fixed level. This is
+done because a capacitor resists changes in voltage, which is exactly what
+is happening with the unregulated DC from the rectifier. Sometimes you see
+a smaller capacitor along side it, which serves a similar function, but it
+regulates changes that the previous capacitor couldn&rsquo;t filter out.</li>
+<li><strong>Voltage Control:</strong> This is usually done with a special component that uses
+some transistor magic to output the voltage desired. Because of conservation
+of energy, it cannot provide a bigger voltage that the input it is given,
+and large V<sub>in</sub>-V<sub>out</sub> differences can result in heating, so a heatsink is
+attached to it to regulate its temperature.</li>
+<li><strong>Control Input:</strong> Usually a potenciometer (a variable resistor) is used and
+connected to some feedback mechanism with the Voltage Control. If you want
+to get fancy, digital controls can also be used. Either way, the bigger the
+input, the larger voltage you recieve.</li>
+</ol>
+<p>Since my voltage source has both positive and negative voltages, the previous
+block diagram repeats for the negative counterpart.</p>
+<p>Now you may be asking, how did you manage the Voltage Control part? Well, this
+where the heart of my project comes in: let me introduce you the <a href="https://www.alldatasheet.com/datasheet-pdf/pdf/11662/ONSEMI/LM317.html">LM317</a> and <a href="https://www.alldatasheet.com/datasheet-pdf/pdf/11667/ONSEMI/LM337.html">LM337</a> voltage regulators. These bad boys can output 1.2V to
+37V using just two resistors! They also have built-in current limiters, thus
+preventing any blow-outs that may happen by accident. Their basic circuit is
+the following:</p>
+
+
+
+<div class="goat svg-container small">
+	
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			font-family="Menlo,Lucida Console,monospace"
+			
+				viewBox="0 0 288 345"
+			>
+			<g transform='translate(8,16)'>
+<path d='M 96,0 L 160,0' fill='none' stroke='currentColor'></path>
+<path d='M 64,32 L 96,32' fill='none' stroke='currentColor'></path>
+<path d='M 160,32 L 216,32' fill='none' stroke='currentColor'></path>
+<path d='M 216,32 L 272,32' fill='none' stroke='currentColor'></path>
+<path d='M 96,64 L 128,64' fill='none' stroke='currentColor'></path>
+<path d='M 128,64 L 160,64' fill='none' stroke='currentColor'></path>
+<path d='M 200,64 L 216,64' fill='none' stroke='currentColor'></path>
+<path d='M 216,64 L 232,64' fill='none' stroke='currentColor'></path>
+<path d='M 200,128 L 216,128' fill='none' stroke='currentColor'></path>
+<path d='M 216,128 L 232,128' fill='none' stroke='currentColor'></path>
+<path d='M 128,160 L 176,160' fill='none' stroke='currentColor'></path>
+<path d='M 176,160 L 216,160' fill='none' stroke='currentColor'></path>
+<path d='M 200,192 L 216,192' fill='none' stroke='currentColor'></path>
+<path d='M 216,192 L 232,192' fill='none' stroke='currentColor'></path>
+<path d='M 200,288 L 216,288' fill='none' stroke='currentColor'></path>
+<path d='M 216,288 L 232,288' fill='none' stroke='currentColor'></path>
+<path d='M 208,320 L 216,320' fill='none' stroke='currentColor'></path>
+<path d='M 216,320 L 224,320' fill='none' stroke='currentColor'></path>
+<path d='M 96,0 L 96,32' fill='none' stroke='currentColor'></path>
+<path d='M 96,32 L 96,64' fill='none' stroke='currentColor'></path>
+<path d='M 128,64 L 128,160' fill='none' stroke='currentColor'></path>
+<path d='M 160,0 L 160,32' fill='none' stroke='currentColor'></path>
+<path d='M 160,32 L 160,64' fill='none' stroke='currentColor'></path>
+<path d='M 200,64 L 200,128' fill='none' stroke='currentColor'></path>
+<path d='M 200,192 L 200,256' fill='none' stroke='currentColor'></path>
+<path d='M 216,32 L 216,64' fill='none' stroke='currentColor'></path>
+<path d='M 216,128 L 216,160' fill='none' stroke='currentColor'></path>
+<path d='M 216,160 L 216,192' fill='none' stroke='currentColor'></path>
+<path d='M 216,288 L 216,320' fill='none' stroke='currentColor'></path>
+<path d='M 232,64 L 232,128' fill='none' stroke='currentColor'></path>
+<path d='M 232,224 L 232,288' fill='none' stroke='currentColor'></path>
+<path d='M 192,288 L 240,192' fill='none' stroke='currentColor'></path>
+<polygon points='252.000000,192.000000 240.000000,186.399994 240.000000,197.600006' fill='currentColor' transform='rotate(300.000000, 240.000000, 192.000000)'></polygon>
+<circle cx='64' cy='32' r='6' stroke='currentColor' fill='currentColor'></circle>
+<circle cx='272' cy='32' r='6' stroke='currentColor' fill='currentColor'></circle>
+<text text-anchor='middle' x='24' y='36' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='32' y='36' fill='currentColor' style='font-size:1em'>_</text>
+<text text-anchor='middle' x='40' y='36' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='48' y='36' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='112' y='36' fill='currentColor' style='font-size:1em'>L</text>
+<text text-anchor='middle' x='112' y='180' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='120' y='36' fill='currentColor' style='font-size:1em'>M</text>
+<text text-anchor='middle' x='120' y='180' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='128' y='36' fill='currentColor' style='font-size:1em'>3</text>
+<text text-anchor='middle' x='128' y='180' fill='currentColor' style='font-size:1em'>j</text>
+<text text-anchor='middle' x='128' y='196' fill='currentColor' style='font-size:1em'>P</text>
+<text text-anchor='middle' x='136' y='36' fill='currentColor' style='font-size:1em'>1</text>
+<text text-anchor='middle' x='136' y='180' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='136' y='196' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='144' y='36' fill='currentColor' style='font-size:1em'>7</text>
+<text text-anchor='middle' x='144' y='180' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='144' y='196' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='152' y='180' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='200' y='20' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='208' y='20' fill='currentColor' style='font-size:1em'>_</text>
+<text text-anchor='middle' x='216' y='20' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='224' y='20' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='232' y='20' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='248' y='100' fill='currentColor' style='font-size:1em'>R</text>
+<text text-anchor='middle' x='248' y='244' fill='currentColor' style='font-size:1em'>R</text>
+<text text-anchor='middle' x='256' y='100' fill='currentColor' style='font-size:1em'>1</text>
+<text text-anchor='middle' x='256' y='244' fill='currentColor' style='font-size:1em'>2</text>
+</g>
+
+		</svg>
+	
+</div>
+<p>The secret of these components is the fact they use a voltage divider to set
+V_out. A voltage divider is a pair of resistors in series that distribute the
+voltage provided to them based on how resistant they are. In this case, we&rsquo;re
+using this tecnique to obtain the initial voltage, <code>V_out</code>.</p>
+<p>The voltage between the <code>V_out</code> and <code>Adjust</code> terminals of the component is set
+to 1.25V, and this voltage is the same voltage that is passing current through
+the resistor R1. Because of Ohm&rsquo;s Law<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, the current that passes through R1
+will be <em>some</em> fixed amount, which coincidently also passes trough R2, our
+potenciometer. The arrow you see on its right is the adjustable knob of the
+potenciometer, and it is connected to the upper connection so that the value
+of R2 ends up as the same as the value we adjusted.</p>
+<p>After clearing some stuff, the amount of voltage we get follows this formula:</p>
+<blockquote>
+<p>V<sub>out</sub> = 1.25( 1 + R2 / R1 )</p>
+</blockquote>
+<p>We can play with the ratio of R2 and R1 to get maximum voltage we want for our
+power source, and design everything around it!</p>
+<p>The datasheets also provide a more robust design that prevents discharges from
+going inside the regulators and smooth its operation, but I won&rsquo;t draw them
+since I&rsquo;m lazy and you will see them later.</p>
+<h3 id="rectifying-ac-to-dc">Rectifying AC to DC</h3>
+<p>As I mentioned in passing before, a rectifying is the name for converting AC
+power to DC. The amount of voltage that is converted is the same as the
+difference between the peaks of the AC wave. How exactly do you measure this
+voltage? It&rsquo;s simple, though it requires a little of theory.</p>
+<p>AC is commonly measured in something called <strong>Root Mean Square</strong>, which in
+layman&rsquo;s terms it is a type of mean where you add up square of each element
+then divide between the number of elements, then the square root of that is the
+RMS value. For a continious function an integral is of the square of the function
+is used instead. RMS is used for measuring AC sine waves because if you use a
+normal mean, then you get 0, which doesn&rsquo;t make sense. The RMS of a sine wave
+gives the <strong>amplitude of the wave, divided by sqrt(2).</strong> In math lang:</p>
+<blockquote>
+<p>V<sub>rms</sub> = V<sub>peak</sub> / sqrt(2)</p>
+</blockquote>
+<p>If your country provides you a voltage of 127V RMS, then that means that for a
+small moment, your appliances recieve 179.6V, then -179.6V a little bit later.
+This amount of power is too much for our little electronics and small motors to
+handle, so this voltage needs to be brought down with the use of a transformer
+that can take this voltage, then with the magic of inductance and magnetism,
+provide a lower AC voltage that can be handled more safely, at the cost of giving
+a higher current value at the exit.</p>
+<p>The type of rectifier I used is called a <strong>full bridge rectifier,</strong> which is the
+most common type of rectifier that is actually useful, because it actually uses
+the full power of the transformer every half cycle. It looks like this:</p>
+
+
+
+<div class="goat svg-container ">
+	
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			font-family="Menlo,Lucida Console,monospace"
+			
+				viewBox="0 0 568 297"
+			>
+			<g transform='translate(8,16)'>
+<path d='M 488,0 L 536,0' fill='none' stroke='currentColor'></path>
+<path d='M 264,16 L 336,16' fill='none' stroke='currentColor'></path>
+<path d='M 336,16 L 432,16' fill='none' stroke='currentColor'></path>
+<path d='M 432,16 L 528,16' fill='none' stroke='currentColor'></path>
+<path d='M 248,48 L 264,48' fill='none' stroke='currentColor'></path>
+<path d='M 264,48 L 280,48' fill='none' stroke='currentColor'></path>
+<path d='M 320,48 L 336,48' fill='none' stroke='currentColor'></path>
+<path d='M 336,48 L 352,48' fill='none' stroke='currentColor'></path>
+<path d='M 88,64 L 200,64' fill='none' stroke='currentColor'></path>
+<path d='M 512,64 L 528,64' fill='none' stroke='currentColor'></path>
+<path d='M 528,64 L 544,64' fill='none' stroke='currentColor'></path>
+<path d='M 32,80 L 88,80' fill='none' stroke='currentColor'></path>
+<path d='M 280,96 L 296,96' fill='none' stroke='currentColor'></path>
+<path d='M 200,112 L 264,112' fill='none' stroke='currentColor'></path>
+<path d='M 264,112 L 336,112' fill='none' stroke='currentColor'></path>
+<path d='M 416,112 L 432,112' fill='none' stroke='currentColor'></path>
+<path d='M 432,112 L 448,112' fill='none' stroke='currentColor'></path>
+<path d='M 200,144 L 264,144' fill='none' stroke='currentColor'></path>
+<path d='M 280,160 L 296,160' fill='none' stroke='currentColor'></path>
+<path d='M 32,176 L 88,176' fill='none' stroke='currentColor'></path>
+<path d='M 248,176 L 264,176' fill='none' stroke='currentColor'></path>
+<path d='M 264,176 L 280,176' fill='none' stroke='currentColor'></path>
+<path d='M 320,176 L 336,176' fill='none' stroke='currentColor'></path>
+<path d='M 336,176 L 352,176' fill='none' stroke='currentColor'></path>
+<path d='M 88,192 L 200,192' fill='none' stroke='currentColor'></path>
+<path d='M 512,192 L 528,192' fill='none' stroke='currentColor'></path>
+<path d='M 528,192 L 544,192' fill='none' stroke='currentColor'></path>
+<path d='M 264,240 L 336,240' fill='none' stroke='currentColor'></path>
+<path d='M 336,240 L 432,240' fill='none' stroke='currentColor'></path>
+<path d='M 432,240 L 528,240' fill='none' stroke='currentColor'></path>
+<path d='M 504,256 L 536,256' fill='none' stroke='currentColor'></path>
+<path d='M 244,88 L 284,88' fill='none' stroke='currentColor'></path>
+<path d='M 316,88 L 356,88' fill='none' stroke='currentColor'></path>
+<path d='M 244,216 L 284,216' fill='none' stroke='currentColor'></path>
+<path d='M 316,216 L 356,216' fill='none' stroke='currentColor'></path>
+<path d='M 48,96 L 48,112' fill='none' stroke='currentColor'></path>
+<path d='M 48,144 L 48,160' fill='none' stroke='currentColor'></path>
+<path d='M 88,64 L 88,80' fill='none' stroke='currentColor'></path>
+<path d='M 88,80 L 88,176' fill='none' stroke='currentColor'></path>
+<path d='M 88,176 L 88,192' fill='none' stroke='currentColor'></path>
+<path d='M 200,64 L 200,112' fill='none' stroke='currentColor'></path>
+<path d='M 200,112 L 200,144' fill='none' stroke='currentColor'></path>
+<path d='M 200,144 L 200,192' fill='none' stroke='currentColor'></path>
+<path d='M 264,16 L 264,48' fill='none' stroke='currentColor'></path>
+<path d='M 264,88 L 264,104' fill='none' stroke='currentColor'></path>
+<path d='M 264,128 L 264,144' fill='none' stroke='currentColor'></path>
+<path d='M 264,144 L 264,176' fill='none' stroke='currentColor'></path>
+<path d='M 264,224 L 264,240' fill='none' stroke='currentColor'></path>
+<path d='M 296,80 L 296,96' fill='none' stroke='currentColor'></path>
+<path d='M 296,160 L 296,176' fill='none' stroke='currentColor'></path>
+<path d='M 336,16 L 336,48' fill='none' stroke='currentColor'></path>
+<path d='M 336,96 L 336,112' fill='none' stroke='currentColor'></path>
+<path d='M 336,112 L 336,176' fill='none' stroke='currentColor'></path>
+<path d='M 336,224 L 336,240' fill='none' stroke='currentColor'></path>
+<path d='M 352,112 L 352,144' fill='none' stroke='currentColor'></path>
+<path d='M 432,16 L 432,112' fill='none' stroke='currentColor'></path>
+<path d='M 432,144 L 432,240' fill='none' stroke='currentColor'></path>
+<path d='M 512,64 L 512,192' fill='none' stroke='currentColor'></path>
+<path d='M 528,16 L 528,64' fill='none' stroke='currentColor'></path>
+<path d='M 528,192 L 528,240' fill='none' stroke='currentColor'></path>
+<path d='M 544,64 L 544,192' fill='none' stroke='currentColor'></path>
+<path d='M 552,16 L 552,32' fill='none' stroke='currentColor'></path>
+<path d='M 552,224 L 552,240' fill='none' stroke='currentColor'></path>
+<path d='M 244,88 L 264,48' fill='none' stroke='currentColor'></path>
+<path d='M 244,216 L 264,176' fill='none' stroke='currentColor'></path>
+<path d='M 316,88 L 336,48' fill='none' stroke='currentColor'></path>
+<path d='M 316,216 L 336,176' fill='none' stroke='currentColor'></path>
+<path d='M 264,176 L 284,216' fill='none' stroke='currentColor'></path>
+<path d='M 264,48 L 284,88' fill='none' stroke='currentColor'></path>
+<path d='M 336,176 L 356,216' fill='none' stroke='currentColor'></path>
+<path d='M 336,48 L 356,88' fill='none' stroke='currentColor'></path>
+<path d='M 264,88 L 264,96' fill='none' stroke='currentColor'></path>
+<path d='M 264,216 L 264,224' fill='none' stroke='currentColor'></path>
+<path d='M 336,88 L 336,96' fill='none' stroke='currentColor'></path>
+<path d='M 336,216 L 336,224' fill='none' stroke='currentColor'></path>
+<path d='M 48,88 L 48,96' fill='none' stroke='currentColor'></path>
+<polygon points='64.000000,96.000000 52.000000,90.400002 52.000000,101.599998' fill='currentColor' transform='rotate(270.000000, 48.000000, 96.000000)'></polygon>
+<path d='M 48,160 L 48,168' fill='none' stroke='currentColor'></path>
+<polygon points='64.000000,160.000000 52.000000,154.399994 52.000000,165.600006' fill='currentColor' transform='rotate(90.000000, 48.000000, 160.000000)'></polygon>
+<polygon points='288.000000,160.000000 276.000000,154.399994 276.000000,165.600006' fill='currentColor' transform='rotate(180.000000, 280.000000, 160.000000)'></polygon>
+<polygon points='304.000000,80.000000 292.000000,74.400002 292.000000,85.599998' fill='currentColor' transform='rotate(270.000000, 296.000000, 80.000000)'></polygon>
+<polygon points='360.000000,112.000000 348.000000,106.400002 348.000000,117.599998' fill='currentColor' transform='rotate(270.000000, 352.000000, 112.000000)'></polygon>
+<polygon points='360.000000,144.000000 348.000000,138.399994 348.000000,149.600006' fill='currentColor' transform='rotate(90.000000, 352.000000, 144.000000)'></polygon>
+<polygon points='512.000000,256.000000 500.000000,250.399994 500.000000,261.600006' fill='currentColor' transform='rotate(180.000000, 504.000000, 256.000000)'></polygon>
+<polygon points='560.000000,32.000000 548.000000,26.400000 548.000000,37.599998' fill='currentColor' transform='rotate(90.000000, 552.000000, 32.000000)'></polygon>
+<path d='M 536,0 A 16,16 0 0,1 552,16' fill='none' stroke='currentColor'></path>
+<path d='M 432,144 A 16,16 0 0,0 416,160' fill='none' stroke='currentColor'></path>
+<path d='M 432,144 A 16,16 0 0,1 448,160' fill='none' stroke='currentColor'></path>
+<path d='M 552,240 A 16,16 0 0,1 536,256' fill='none' stroke='currentColor'></path>
+<path d='M 264,96 L 264,104' fill='none' stroke='currentColor'></path>
+<path d='M 264,120 L 264,128' fill='none' stroke='currentColor'></path>
+<path d='M 264,104 A 9,9 0 0,0 264,120' fill='none' stroke='currentColor'></path>
+<text text-anchor='middle' x='40' y='132' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='48' y='132' fill='currentColor' style='font-size:1em'>_</text>
+<text text-anchor='middle' x='56' y='132' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='64' y='132' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='104' y='132' fill='currentColor' style='font-size:1em'>T</text>
+<text text-anchor='middle' x='112' y='132' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='120' y='132' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='128' y='132' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='136' y='132' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='144' y='132' fill='currentColor' style='font-size:1em'>f</text>
+<text text-anchor='middle' x='152' y='132' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='160' y='4' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='160' y='132' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='168' y='132' fill='currentColor' style='font-size:1em'>m</text>
+<text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='176' y='132' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='184' y='4' fill='currentColor' style='font-size:1em'>v</text>
+<text text-anchor='middle' x='184' y='132' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='192' y='4' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='200' y='4' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='208' y='4' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='216' y='4' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='224' y='4' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='232' y='4' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='240' y='4' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='248' y='4' fill='currentColor' style='font-size:1em'>l</text>
+<text text-anchor='middle' x='256' y='260' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='264' y='4' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='264' y='260' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='272' y='4' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='272' y='260' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='280' y='4' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='288' y='4' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='288' y='148' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='288' y='260' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='296' y='4' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='296' y='132' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='296' y='148' fill='currentColor' style='font-size:1em'>_</text>
+<text text-anchor='middle' x='296' y='260' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='304' y='4' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='304' y='132' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='304' y='148' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='304' y='260' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='312' y='4' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='312' y='148' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='312' y='260' fill='currentColor' style='font-size:1em'>u</text>
+<text text-anchor='middle' x='320' y='148' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='320' y='260' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='320' y='276' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='328' y='4' fill='currentColor' style='font-size:1em'>g</text>
+<text text-anchor='middle' x='328' y='260' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='328' y='276' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='336' y='4' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='336' y='260' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='344' y='4' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='344' y='276' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='352' y='4' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='352' y='260' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='352' y='276' fill='currentColor' style='font-size:1em'>h</text>
+<text text-anchor='middle' x='360' y='260' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='360' y='276' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='368' y='4' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='368' y='36' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='368' y='228' fill='currentColor' style='font-size:1em'>V</text>
+<text text-anchor='middle' x='368' y='276' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='376' y='4' fill='currentColor' style='font-size:1em'>h</text>
+<text text-anchor='middle' x='376' y='36' fill='currentColor' style='font-size:1em'>+</text>
+<text text-anchor='middle' x='376' y='228' fill='currentColor' style='font-size:1em'>-</text>
+<text text-anchor='middle' x='376' y='260' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='384' y='4' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='384' y='260' fill='currentColor' style='font-size:1em'>h</text>
+<text text-anchor='middle' x='384' y='276' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='392' y='4' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='392' y='260' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='392' y='276' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='400' y='132' fill='currentColor' style='font-size:1em'>C</text>
+<text text-anchor='middle' x='400' y='276' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='408' y='4' fill='currentColor' style='font-size:1em'>d</text>
+<text text-anchor='middle' x='408' y='132' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='408' y='260' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='408' y='276' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='416' y='4' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='416' y='132' fill='currentColor' style='font-size:1em'>p</text>
+<text text-anchor='middle' x='416' y='260' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='416' y='276' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='424' y='4' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='424' y='132' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='424' y='260' fill='currentColor' style='font-size:1em'>a</text>
+<text text-anchor='middle' x='424' y='276' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='432' y='4' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='432' y='132' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='432' y='260' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='432' y='276' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='440' y='4' fill='currentColor' style='font-size:1em'>c</text>
+<text text-anchor='middle' x='440' y='132' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='440' y='260' fill='currentColor' style='font-size:1em'>s</text>
+<text text-anchor='middle' x='440' y='276' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='448' y='4' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='448' y='132' fill='currentColor' style='font-size:1em'>t</text>
+<text text-anchor='middle' x='448' y='260' fill='currentColor' style='font-size:1em'>f</text>
+<text text-anchor='middle' x='448' y='276' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='456' y='4' fill='currentColor' style='font-size:1em'>i</text>
+<text text-anchor='middle' x='456' y='132' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='456' y='260' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='464' y='4' fill='currentColor' style='font-size:1em'>o</text>
+<text text-anchor='middle' x='464' y='132' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='464' y='260' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='472' y='4' fill='currentColor' style='font-size:1em'>n</text>
+<text text-anchor='middle' x='472' y='260' fill='currentColor' style='font-size:1em'>m</text>
+<text text-anchor='middle' x='480' y='260' fill='currentColor' style='font-size:1em'>e</text>
+<text text-anchor='middle' x='488' y='260' fill='currentColor' style='font-size:1em'>r</text>
+<text text-anchor='middle' x='528' y='84' fill='currentColor' style='font-size:1em'>L</text>
+<text text-anchor='middle' x='528' y='116' fill='currentColor' style='font-size:1em'>O</text>
+<text text-anchor='middle' x='528' y='148' fill='currentColor' style='font-size:1em'>A</text>
+<text text-anchor='middle' x='528' y='180' fill='currentColor' style='font-size:1em'>D</text>
+</g>
+
+		</svg>
+	
+</div>
+<p>The triangles with top-hats you see is called a <strong>diode</strong>, which it&rsquo;s job is to
+only allow current to pass through when there is a higher voltage on its <strong>anode</strong>
+(the base of the triangle) relative to its <strong>cathode</strong> (the lined top), of at
+least 0.7V; anything else and the diode stops the flow of current. Because of
+their arrangement, current is always allowed to go through back the transformer
+from one of the two diodes, and escape from the other side. It&rsquo;s something quite
+interesting I invite you to investigate for yourself, as my diagrams don&rsquo;t give
+enough credit to how awesome power electronics is.</p>
+<p>The other thing that I added here is the filter: just a single capacitor big enough
+to charge when provided with voltage higher than the one it is storing, and
+discharge slowly via the load when it isn&rsquo;t. Something I read on my power electronics
+book <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> recently is that because of this charging and discharging action, the voltage
+value being rectified will oscilate between a minimum and a maximum instead of
+the 0 to peak oscilation you would see without the filter being there.
+In general, a bigger capacitor means a higher discharge time, so the range of
+DC voltage we get becomes more precise.<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<p>Isn&rsquo;t that great?</p>
+<h2 id="in-practice">In practice</h2>
+<p>It is great, until it isn&rsquo;t.</p>
+<h3 id="the-transformer-used">The transformer used</h3>
+
+<figure><img src="/posts/2026/07/bipolar-linear-voltage-source/transformers_hu_2ac866d5d356f06c.webp"
+      alt="Two transformers with diferent types of outputs, displayed in a wooden background. The left one has four outputs colored yellow, white, red and blue. The right one only has a sigle output in brown, but has a central tap coded in black"><figcaption>
+    <p>The two transformers I used during this project. The left one was the original one but its input is short-circuited, so it is unusable. The right one is the replacement and the one I ended up using.
+    </p>
+  </figcaption>
+  </figure>
+<p>Let&rsquo;s talk about the most important thing first: The power source, aka the
+transformer. Orignally I wanted to use the left transformer as it was given to
+me by cousin who gifted me with leftover components for to recycle when he
+finished his mecatronics degree. After testing it with a series circuit<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>,
+it turns out I discovered two things:</p>
+<ol>
+<li>The outputs gave me 36.6V RMS on the red and white outputs (51.7V when
+rectified), and 8V RMS on the blue output (11.3V amplitude).</li>
+<li><strong>The input is short circuited, and would always flip my home&rsquo;s breakers
+when plugged without the series circuit.</strong></li>
+</ol>
+<p>Which meant the original shematic I designed (and honestly quite a terrible
+one) wouldn&rsquo;t work unless I redesigned some things for the new transformer.</p>
+
+<figure>
+      <img src="/posts/2026/07/bipolar-linear-voltage-source/original-schematic.png"
+      alt="The schematic originally planned for the 3 output transformer.">
+  </figure>
+<p>Issue number one of this design is the double use of rectifiers for the bipolar
+voltages: I could have rectified the extreme poles of the two 36.6V RMS outputs
+and use their union as a central tap, therefore saving me 4 diodes. The second
+issue is the limitation of the LM317 and LM337 can only savely regulate a
+|V<sub>in</sub>-V<sub>out</sub>| difference of 40V. This meant that while I <em>could</em> design it for
+the 30V DC I wanted for each pole, I needed to think about the opposite
+scenario: what happens at the minimum of 1.25V when the variable resistor is
+set to 0? If I wanted to bring 30V into the scene I needed to place a voltage
+divider <em>before</em> the regulator, and those things consume power, leading to an
+inneficient use of electricity.</p>
+<p>And so, I purchased the transformer on the right from an electronics shop that
+bought it from Steren, which is rated to provide 24V RMS and 1.2A RMS. After
+testing it with the a capacitor of 3300uF, my voltage source can now provide&hellip;</p>
+<p><strong>20.1 VOLTS PER SIDE?!?!?!</strong> That&rsquo;s lower from what it is rated, but fine,
+compromises are ok. I think.</p>
+<p>Thus, my final schematic is this one, which I designed in KiCad:</p>
+
+<figure>
+      <img src="/posts/2026/07/bipolar-linear-voltage-source/final-schematic.png"
+      alt="The schematic designed for the 24V transformer.">
+  </figure>
+<h3 id="designing-for-a-lower-output-voltage">Designing for a lower output voltage</h3>
+<p>I used <a href="https://unicrom.com/fuente-de-voltaje-variable-de-doble-polaridad/">this design from Unicrom</a>
+as a reference, and noticed I could use the extremes of the transformer
+to rectify them, then connect the central tap to ground to obtain my bipolar
+voltage. What I labeled as <code>V_Rec+</code> and <code>V_Rec-</code> are 40V apart, but when
+measured in reference to the central tap, they&rsquo;re at 20V. That&rsquo;s a lot better
+for the regulators to handle! Also, <code>V_Rec+</code> feeds both the variable positive
+voltage and the fixed 5V regulation, done with the help of a
+<a href="https://www.alldatasheet.com/datasheet-pdf/pdf/2172919/ONSEMI/LM7805.html">LM7805.</a></p>
+<p>Finally, I had to adjust the new regulation resistors to a new maximum value
+of 18V. Solving R1 from the regulation equation and using 10k potenciometers,
+the resistence of R1 needed to be 746 Ohms, a resistor whose value does not
+exist on the market. I ended up summing a 470 and 220 Ohm for 690 in total,
+so now my source can theoretically provide up to <strong>19.36V</strong> in each direction.</p>
+<h3 id="protoboard-prototype">Protoboard prototype</h3>
+
+<figure><img src="/posts/2026/07/bipolar-linear-voltage-source/protoboard-prototype_hu_2b77b4300ee1eeaf.webp"
+      alt="The prototype of the power source with some scattered stuff on the desk"><figcaption>
+    <p>The prototype of the power source with some scattered stuff on the desk
+    </p>
+  </figcaption>
+  </figure>
+<p>I won&rsquo;t go into detail of how I assembled the prototype of the circuit, since
+it&rsquo;s boring and I don&rsquo;t have the writing juice to describe placing wires and
+components neatly. I will mentioned that I used 1 Watt resistors to act as a
+load when building out each step of the power source, as to not overload the
+transformer with a much lower current than it was intented to work for.</p>
+<p>Most of the wires were already cut due to my digital electronics course, so I
+only had to select the ones that fit were I needed them to connect to.</p>
+<p>During testing of the first transformer, some of my clippers got burned, so
+they are now on clamper duty until I make the PCB.</p>
+<p>Speaking of a PCB&hellip;</p>
+<h2 id="going-from-prototype-to-something-useful">Going from prototype to something useful</h2>
+<p>We now reach the present, where I finished designing the PCB for the power
+source. What&rsquo;s that you ask? PCB stands for <strong>Printed Circuit Board</strong> and it&rsquo;s
+a plate of one or more layers of copper that are cut in such a way that they
+form the topology needed for a circuit to work. This technology revolutionized
+electronic systems by creating a standard way for manufacturing circuits at
+scale. Components can either be soldered in a through hole (THT), or mounted
+on the surface (SMD) when connected to the PCB.</p>
+<p>In Veracruz, it is rare to see a PCB machine that can print more than one layer,
+so I had to design mine with the limitation of using the <em>Top Copper</em> layer.
+Here is the final result:</p>
+
+<figure><img src="/posts/2026/07/bipolar-linear-voltage-source/pcb_hu_f0faf4ef9d92d808.webp"
+      alt="3D render of the PCB for my power source, with the terminal block annotated to where they connect to"><figcaption>
+    <p>3D render of the PCB for my power source, with the terminal block annotated to where they connect to
+    </p>
+  </figcaption>
+  </figure>
+<p>The biggest problem I faced was connecting the ground to everywhere it needed
+to go, which ended up with me having to go below the rectifier to reach the
+positive voltage regulator and the output ground connection, while keeping it
+relatively big so it&rsquo;s voltage value doesn&rsquo;t change much. Ideally, I would have
+reserved the <em>Bottom Copper</em> exclusively to ground connections, and the <em>Top Copper</em>
+to the rest of the circuit. Compromises are ok, I think.</p>
+<p>And that&rsquo;s where I&rsquo;m at! I&rsquo;m looking for PCB services in my city, and I need to
+check if my school&rsquo;s PCB printer room is open right now, or wait until the
+semester starts to use it. A friend of mine is 3D printing a cabinet that will
+hold everything inside, so I need to find the outlets needed. After that, I will
+need to solder everything to the board without the tin melting over pathways and
+causing a short circuit.</p>
+<p>But&rsquo;s another can of worms I <em>may</em> update you on in the future. That&rsquo;s everything
+for now, so in case I don&rsquo;t see you, good morning, good evening and good night!</p>
+<p><sub>Please forgive my lack of blog posting</sub></p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Ohm&rsquo;s Law states that Voltage is directly proportional to Current times
+Resistance, so knowing two gives you the missing third. Mathematically it
+is written <code>V = IR</code>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Power Electronics Circuits, Devices and Applications. Muhammad H. Rashid.
+<strong>Chapter 3.13:</strong> Rectifier circuit design, Example 3.20&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>You <em>could</em> calculate the capacitance needed to maintain a DC voltage on
+a certain level with some certainty, but it&rsquo;s very complicated and I won&rsquo;t
+go into it here. Please refer to the example in Rashid&rsquo;s book to see how
+you can calculate it, only to find no such capacitor exists and you need to
+obtain one with a similar value, connect many in parallel, or in series.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>A series circuit is just a socket coord connected to a lightbulb on one
+end, which is connected to another wire or a pair of clippers, while the
+other end of the coord is left bare. The idea is that if the two ends are
+short circuited, the lightbulb turns on, taking the power that would have
+gone to the tested circuit instead.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article>
+    </main>

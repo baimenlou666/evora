@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node -e \"console.log('Using prebuilt public directory')\"",
+  "outputDirectory": "public",
+  "functions": {
+    "api/evora/chat.mjs": {
+      "maxDuration": 60
+    }
+  }
+}

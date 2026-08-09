@@ -1,0 +1,163 @@
+.grid-posts {
+    display: grid;
+    gap: 4rem;
+    grid-template-columns: auto 40%;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        'posts header'
+        'posts aside';
+
+    align-items: start;
+}
+
+.grid-posts > [data-area="header"] { grid-area: header; }
+.grid-posts > [data-area="posts"] { grid-area: posts; }
+.grid-posts > [data-area="aside"] { grid-area: aside; }
+
+@media (max-width: 720px) {
+    .sticky {
+        position: static;
+    }
+}
+
+/* Calendar Grid Styles */
+.calendar {
+    margin-bottom: 4rem;
+}
+
+.calendar > header {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+.calendar-month {
+    display: block;
+    background-color: var(--blue-900);
+    padding-block: 0.5rem;
+    padding-inline: 0.1rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+
+    cursor: pointer;
+    position: relative;
+
+    transition: 200ms;
+    border-image-source: url('/assets/images/select-frame-normal.png');
+    border-image-slice: calc( 1/5 * 100% ) calc( 10/40 * 100% ) fill;
+    border-image-width: 16px;
+    border-image-outset: 16px;
+    border-image-repeat: round;
+}
+
+.calendar-month input[type="radio"] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+}
+
+.calendar-month:has(input[type="radio"]:checked) {
+    border-image-source: url('/assets/images/select-frame-active.png');
+}
+
+.calendar-month:has(input[type="radio"]:disabled) {
+    cursor: not-allowed;
+    opacity: 0.5;
+    border-image-source: url('/assets/images/select-frame-disabled.png') !important;
+}
+
+.calendar-posts {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.posts-of-month {
+    margin-block: 3rem;
+}
+
+.calendar-posts > .posts-of-month {
+    opacity: 0;
+    display: none;
+    animation: fade-out 100ms forwards;
+}
+
+.posts-of-month > article.article-card {
+    margin-block: 2rem;
+}
+
+.calendar-grid:has( input[value="1"]:checked ) + .calendar-posts > .posts-of-month[data-month="1"],
+.calendar-grid:has( input[value="2"]:checked ) + .calendar-posts > .posts-of-month[data-month="2"],
+.calendar-grid:has( input[value="3"]:checked ) + .calendar-posts > .posts-of-month[data-month="3"],
+.calendar-grid:has( input[value="4"]:checked ) + .calendar-posts > .posts-of-month[data-month="4"],
+.calendar-grid:has( input[value="5"]:checked ) + .calendar-posts > .posts-of-month[data-month="5"],
+.calendar-grid:has( input[value="6"]:checked ) + .calendar-posts > .posts-of-month[data-month="6"],
+.calendar-grid:has( input[value="7"]:checked ) + .calendar-posts > .posts-of-month[data-month="7"],
+.calendar-grid:has( input[value="8"]:checked ) + .calendar-posts > .posts-of-month[data-month="8"],
+.calendar-grid:has( input[value="9"]:checked ) + .calendar-posts > .posts-of-month[data-month="9"],
+.calendar-grid:has( input[value="10"]:checked ) + .calendar-posts > .posts-of-month[data-month="10"],
+.calendar-grid:has( input[value="11"]:checked ) + .calendar-posts > .posts-of-month[data-month="11"],
+.calendar-grid:has( input[value="12"]:checked ) + .calendar-posts > .posts-of-month[data-month="12"] {
+    display: block;
+    animation: fade-in 100ms forwards;
+}
+
+@keyframes fade-in {
+    from {
+        height: 0;
+        opacity: 0;
+        display: block;
+    }
+    to {
+        height: auto;
+        opacity: 1;
+        display: block;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        height: auto;
+        opacity: 1;
+        display: block;
+    }
+
+    to {
+        height: 0;
+        opacity: 0;
+        display: none;
+    }
+}
+
+/* Medium Screens */
+@media (max-width: 1200px) {
+	.grid-posts {
+        grid-template-columns: auto 35%;
+        grid-template-rows: auto 1fr;
+		grid-template-areas:
+			'header header'
+            'posts aside';
+	}
+}
+
+/* Small Screens */
+@media (max-width: 720px) {
+	.grid-posts {
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+		grid-template-areas:
+			'header'
+            'aside'
+            'posts';
+	}
+
+    .calendar-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

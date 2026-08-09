@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Something I Learnt on KFCMan's Odd Corner of the Internet</title><link>https://kunfucutsman.neocities.org/tags/something-i-learnt/</link><description>Recent content in Something I Learnt on KFCMan's Odd Corner of the Internet</description><generator>Hugo</generator><language>en-US</language><lastBuildDate>Mon, 27 Jul 2026 17:53:00 -0600</lastBuildDate><atom:link href="https://kunfucutsman.neocities.org/tags/something-i-learnt/index.xml" rel="self" type="application/rss+xml"/><item><title>Making a Bipolar Linear Voltage Source</title><link>https://kunfucutsman.neocities.org/posts/2026/07/bipolar-linear-voltage-source/</link><pubDate>Mon, 27 Jul 2026 17:53:00 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2026/07/bipolar-linear-voltage-source/</guid><description>&lt;main class="frame main-frame single-margin"&gt;
+ &lt;header&gt;
+ &lt;h1&gt;Making a Bipolar Linear Voltage Source&lt;/h1&gt;
+
+ 
+&lt;div class="article-data"&gt;
+ 
+ &lt;div&gt;
+ 
+ &lt;p&gt;&lt;b&gt;Date:&lt;/b&gt; &lt;time datetime="2026-07-27 17:53:00 -0600 -0600"&gt;Jul 27, 2026&lt;/time&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Tags:&lt;/b&gt; &lt;ul class="inline-list"&gt;
+ &lt;li&gt;&lt;a href="https://kunfucutsman.neocities.org/tags/something-i-learnt/"&gt;Something I learnt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;&lt;/div&gt;
+
+ &lt;/div&gt;
+
+
+ &lt;nav id="TableOfContents"&gt;
+ &lt;ul&gt;
+ &lt;li&gt;&lt;a href="#in-theory"&gt;In theory&lt;/a&gt;
+ &lt;ul&gt;
+ &lt;li&gt;&lt;a href="#design-principles"&gt;Design principles&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="#rectifying-ac-to-dc"&gt;Rectifying AC to DC&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+ &lt;/li&gt;
+ &lt;li&gt;&lt;a href="#in-practice"&gt;In practice&lt;/a&gt;
+ &lt;ul&gt;
+ &lt;li&gt;&lt;a href="#the-transformer-used"&gt;The transformer used&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="#designing-for-a-lower-output-voltage"&gt;Designing for a lower output voltage&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="#protoboard-prototype"&gt;Protoboard prototype&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+ &lt;/li&gt;
+ &lt;li&gt;&lt;a href="#going-from-prototype-to-something-useful"&gt;Going from prototype to something useful&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/nav&gt;
+ &lt;/header&gt;
+ &lt;article class="content"&gt;&lt;p&gt;I&amp;rsquo;ll go straight to the point.&lt;/p&gt;
+&lt;p&gt;In my free time I&amp;rsquo;ve been designing a linear voltage source. What&amp;rsquo;s that you
+may ask? It&amp;rsquo;s a type of power source that has the property that it adjusts
+its voltage in a way that &lt;em&gt;linearly&lt;/em&gt; mirrors some input, so it&amp;rsquo;s behavior
+looks something like this:&lt;/p&gt;</description></item><item><title>A summary of counting systems</title><link>https://kunfucutsman.neocities.org/posts/2026/03/counting-systems/</link><pubDate>Tue, 14 Jul 2026 22:06:00 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2026/03/counting-systems/</guid><description>&lt;main class="frame main-frame single-margin"&gt;
+ &lt;header&gt;
+ &lt;h1&gt;A summary of counting systems&lt;/h1&gt;
+
+ 
+&lt;div class="article-data"&gt;
+ 
+ &lt;div&gt;
+ 
+ &lt;p&gt;&lt;b&gt;Date:&lt;/b&gt; &lt;time datetime="2026-07-14 22:06:00 -0600 -0600"&gt;Jul 14, 2026&lt;/time&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Tags:&lt;/b&gt; &lt;ul class="inline-list"&gt;
+ &lt;li&gt;&lt;a href="https://kunfucutsman.neocities.org/tags/programming/"&gt;Programming&lt;/a&gt;&lt;/li&gt;
+
+ &lt;li&gt;&lt;a href="https://kunfucutsman.neocities.org/tags/something-i-learnt/"&gt;Something I learnt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;&lt;/div&gt;
+
+ &lt;/div&gt;
+
+
+ &lt;nav id="TableOfContents"&gt;
+ &lt;ul&gt;
+ &lt;li&gt;&lt;a href="#why-use-different-bases"&gt;Why use different bases?&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="#explanation-of-counting-systems"&gt;Explanation of counting systems&lt;/a&gt;
+ &lt;ul&gt;
+ &lt;li&gt;&lt;a href="#how-do-you-convert-between-systems"&gt;How do you convert between systems?&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+ &lt;/li&gt;
+ &lt;li&gt;&lt;a href="#operations"&gt;Operations&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="#but-wait-theres-more"&gt;But wait, there&amp;rsquo;s more!&lt;/a&gt;&lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/nav&gt;
+ &lt;/header&gt;
+ &lt;article class="content"&gt;&lt;p&gt;Hello! College is still college so I&amp;rsquo;m busy!&lt;/p&gt;
+&lt;p&gt;Want to know what I&amp;rsquo;ve been learning? This is a part of the first of my &lt;strong&gt;Digital Electronics&lt;/strong&gt; subject.&lt;/p&gt;
+&lt;p&gt;I really wanted to write everything down, but seeing as I stop developing blog entries past a certain point, it&amp;rsquo;s better for me to keep it short&lt;/p&gt;</description></item><item><title>Thinking About Prayer</title><link>https://kunfucutsman.neocities.org/posts/2025/12/thinking-about-prayer/</link><pubDate>Sat, 06 Dec 2025 18:55:42 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2025/12/thinking-about-prayer/</guid><description/></item><item><title>New Post New Year New Season</title><link>https://kunfucutsman.neocities.org/posts/2025/01/new-post-new-season/</link><pubDate>Sat, 25 Jan 2025 14:43:40 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2025/01/new-post-new-season/</guid><description/></item><item><title>Mechatronics' third semester is all about vectors</title><link>https://kunfucutsman.neocities.org/posts/2024/09/third-semester-is-about-vectors/</link><pubDate>Tue, 10 Sep 2024 09:24:20 -0600</pubDate><guid>https://kunfucutsman.neocities.org/posts/2024/09/third-semester-is-about-vectors/</guid><description/></item></channel></rss>

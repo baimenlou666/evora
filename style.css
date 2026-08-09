@@ -1,0 +1,175 @@
+  header {
+       width: 100%;
+    }
+body {
+      font-family: "courier", "courier new";
+      color: #f3f0fa;
+      background-color: #09020a;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: 50% 50%;
+      }
+          h1, h2, h3, h4, h5, h6 {
+      color: #f3f0fa;
+    }
+    p {
+      color: #f3f0fa;
+      size: 17px;
+    }
+    pre {
+      color: #f3f0fa;
+      size: 17px;
+    }
+    main {
+      float: left;
+      margin: 10px;
+    }
+    a {
+       color: #f3f0fa;
+    }
+    a:hover {
+            color: #8f81aa ;
+          }
+      .flex-container {
+         display: flex;
+         padding: 10px;
+         margin: 10px;
+       } 
+       .flex-webrings {
+         display: flex;
+         padding: 20px;
+         margin: 20px;
+         flex-direction: row;
+         flex-wrap: wrap;
+       } 
+         details {
+      color: #f3f0fa;
+      size: 17px;
+    }
+    details:hover {
+      color: #8f81aa;
+      size: 17px;
+    }
+    li {
+      color: #f3f0fa;
+      size: 17px;
+      list-style-type: square;
+    }
+    ul {
+    list-style-type: square;
+    }
+    blockquote {
+      color: #f3f0fa;
+    }
+    .spoiler {
+  color:#f3f0fa ;
+  background-color: #f3f0fa;
+  ;
+}
+.spoiler:hover {
+  color: inherit ;
+  background-color: inherit; 
+}
+.reviewbox {
+  border: solid 2px #f3f0fa;
+  padding: 10px; 
+  margin: 10px
+}
+      #aside {
+        float: right;
+        border: solid 3px #f3f0fa;
+        padding: 15px;
+        width: 150px;
+        margin: 10px;
+        font-size: 15px;
+      } 
+  .sidenav {
+    font-size: 15px;
+  }
+      
+    #topnav {
+      border: solid 1px #f3f0fa;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      font-size: 15px;
+      text-align: center;
+    } 
+    
+    #topnav p {
+      margin: 10px;
+    }
+    
+    /*backgrounds section*/
+    .page-index {
+  background-image: url(/bgs/bg1.jpg)
+    }
+        .bg2 {
+  background-image: url(/bgs/bg2.jpg)
+    }
+        .page-languages {
+  background-image: url(/bgs/bg3.jpg)
+    }
+        .page-links {
+  background-image: url(/bgs/bg4.jpg)
+    }
+        .page-books {
+  background-image: url(/bgs/bg5.jpg)
+    }
+        .page-blog {
+  background-image: url(/bgs/bg6.jpg)
+    }
+        .page-media {
+  background-image: url(/bgs/bg7.jpg) /*belongs to MH*/
+    }
+        .page-gallery {
+  background-image: url(/bgs/bg8.jpg)
+    }
+        .bg9 {
+  background-image: url(/bgs/bg9.jpg)
+    }
+    /* this little body section was robbed from https://aleclownes.com/2017/02/01/crt-display.html and sure as shit isn't mine. looks cool as hell but I have no idea if I should use it. */
+body::before {
+content: " ";
+display: block;
+position: fixed;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+z-index: 2;
+background-size: 100% 2px, 3px 100%;  /*affects 'bar' size */
+pointer-events: none;
+}
+/* I saw the smaller bars thingie work just on its own without the need to add the crt class. again, unsure if this is worth implementing in this way. */
+    
+    @media only screen and (min-width: 651px) {
+      #topnav {
+        display: none;
+      }
+    }
+      
+    @media only screen and (max-width: 650px) {
+      
+      .flex-container {
+        display: flex;
+        flex-direction: column;
+      }
+      #sidenav {
+        display: none;
+      }
+      #aside {
+        width: fit-content;
+      }
+       .extras {
+        display: flex;
+        flex-direction: row;
+      } 
+      
+      .img {
+        max-width: 630px;
+      }
+    }
+

@@ -1,0 +1,18 @@
+baseURL = "https://kunfucutsman.neocities.org/"
+locale = "en-US"
+title = "KFCMan's Odd Corner of the Internet"
+
+[taxonomies]
+  tag = "tags"
+  series = "series"
+
+[params]
+  description = "KFCMan's odd corner of the internet"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[security]
+  allowContent = ['^text/html$', '^text/markdown$']

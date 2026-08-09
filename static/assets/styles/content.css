@@ -1,0 +1,304 @@
+/* CSS used for anything .content related */
+@media (min-width: 720px) {
+	.single-margin:has(> article.content) {
+		width: min(90ch, 65dvw);
+	}
+}
+
+.content > * {
+	margin-block: 2rem;
+}
+
+.content > :is(h1, h2, h3, h4, h5, h6) {
+	margin-block: 1rem;
+	margin-bottom: 2rem;
+}
+
+.content :is(ul, ol) {
+	--tab-space: 1.5rem;
+	position: relative;
+	width: calc(100% - var(--tab-space));
+	left: var(--tab-space);
+}
+
+.content :is(ul, ol) li {
+	margin-block: 0.5rem;
+}
+
+.content figure > img {
+	margin: auto;
+	max-width: min(100%, 30rem);
+}
+
+.content figure>figcaption {
+	margin: auto;
+	text-align: center;
+	max-width: 60ch;
+
+	color: var(--orange-400);
+	font-size: small;
+}
+
+.content figure.thin-text>figcaption {
+	max-width: 40ch;
+}
+
+.content summary {
+	text-align: center;
+	color: var(--blue-400);
+	font-size: large;
+}
+
+.content details {
+	border-radius: 0.5rem;
+	margin-block: 1rem;
+	padding-block: 0.5rem;
+	background-color: var(--secondary);
+}
+
+.content blockquote {
+	background-color: var(--blue-900);
+	border-left: 0.5rem solid var(--accent);
+	padding-block: 1rem;
+	padding-inline: 1rem;
+	margin-block: 1rem;
+	margin-inline: 1rem;
+	border-radius: 0.5rem;
+}
+
+.content blockquote p {
+	margin-block: 0.1rem;
+}
+.content > table thead {
+	background-color: var(--blue-700);
+}
+
+.content > table td {
+	padding-inline: 1rem;
+	padding-block: 0.5rem;
+}
+
+.content > table th {
+	padding-inline: 1rem;
+	padding-block: 0.5rem;
+	text-align: center !important;
+}
+
+.content > table tbody > :nth-child(even) {
+	background-color: var(--blue-800);
+}
+.content > table tbody  tr:nth-child(odd) {
+	background-color: var(--blue-900);
+}
+
+.content hr {
+	border: 1px solid var(--orange-600);
+}
+
+blockquote.cite {
+	background-color: var(--orange-900);
+	border-left: 0.5rem solid var(--primary-light);
+	padding-block: 1rem;
+	padding-inline: 1rem;
+	margin-inline: 1rem;
+	border-radius: 0.5rem;
+}
+
+blockquote.cite > cite:last-child {
+	display: block;
+	margin-top: 2rem;
+	font-size: small;
+	width: fit-content;
+	border-radius: 0.2rem;
+	border-bottom: 0.2rem solid var(--primary-light);
+}
+
+.float-left {
+	float: left;
+	margin-right: 1rem;
+	margin-block: 0;
+}
+
+.float-right {
+	float: right;
+	margin-left: 1rem;
+	margin-block: 0;
+}
+
+/* Article & Series Data */
+.article-data {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 1rem;
+}
+
+.article-data > * {
+	border-inline: 0.2rem solid var(--gray-800);
+	border-radius: 0.2rem;
+	padding-inline: 0.5em;
+	padding-block: 0.5rem;
+	background-color: var(--gray-300);
+}
+
+.series-data {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas:
+		'series-name series-name'
+		'prev next';
+	justify-items: center;
+	text-align: center;
+
+	border-block: 0.2rem solid var(--gray-800);
+	border-radius: 0.2rem;
+	padding-block: 0.5rem;
+}
+
+.series-data a.series-name { grid-area: series-name; }
+.series-data a.prev { grid-area: prev; }
+.series-data a.next { grid-area: next; }
+
+.series-data > a:is( :focus, :hover ) {
+	color: var(--gray-800);
+}
+
+.series-data a {
+	border-inline: 0.1rem solid var(--gray-600);
+	padding-inline: 0.5rem;
+}
+
+.series-data a:not(.series-name):is( :focus, :hover ) {
+	padding-inline: 20%;
+	border-inline: 0.2rem solid var(--gray-900);
+}
+
+/* Hugo TableOfContents shortcode */
+#TableOfContents {
+	background-color: var(--blue-900);
+	padding-block: 1rem;
+	padding-inline: 0.5rem;
+	border-radius: 0.5rem;
+	margin-block: 2rem;
+}
+
+#TableOfContents:is( :focus-within, :hover ) {
+	--shadow-offset: 5px;
+}
+
+#TableOfContents ul {
+	--highlight-border: var(--orange-600);
+	border-left: 0.2rem solid var(--highlight-border);
+	padding-inline: 0.5rem;
+	border-radius: 0.2rem;
+	margin-left: 1rem;
+
+	transition: 100ms;
+}
+
+#TableOfContents ul:is( :focus-within, :hover ) {
+	--highlight-border: var(--orange-400);
+}
+
+#TableOfContents li {
+	margin-block: 0.5rem;
+	list-style: none;
+}
+
+/* Hugo's code highlight */
+.highlight {
+	position: relative;
+}
+
+.highlight > pre {
+	border-radius: 0.5rem;
+	padding: 1rem;
+	overflow: auto;
+}
+
+.highlight > button {
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	cursor: copy;
+	background-color: transparent;
+	border: 0;
+}
+
+.highlight > button svg {
+	fill: var(--gray-600);
+	transition: 100ms;
+}
+
+.highlight > button:is( :hover, :focus ) svg {
+	fill: var(--blue-300);
+}
+
+/* Tabs shortcodes */
+
+.tab-wrapper {
+	border-radius: 0.5rem;
+	background-color: var(--gray-300);
+	padding: 0.5rem;
+}
+
+.tab-wrapper > .tab-titles li {
+	display: inline-block;
+
+	background-color: var(--gray-300);
+
+	margin-block: 0;
+	margin-inline: 0;
+	padding-block: 0.5rem;
+	padding-inline: 1rem;
+
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+
+	cursor: pointer;
+	transition: 200ms;
+}
+
+.tab-wrapper > .tab-titles label { cursor: pointer; }
+.tab-wrapper > .tab-titles li:has( input:checked ) { background-color: var(--gray-200); }
+.tab-wrapper > .tab-titles li:has( input:focus-visible ) { background-color: var(--gray-400); outline: auto; }
+.tab-wrapper > .tab-titles li:has( :hover ) { background-color: var(--gray-500); }
+.tab-wrapper > .tab-titles li:hover:has( input:checked ) { background-color: var(--gray-400); }
+.tab-wrapper > .tab-titles input { height: 0; width: 0; }
+
+.tab-wrapper > .tab { display: none; }
+
+.tab-wrapper > :is(
+	.tab-titles:has( input[value="0"]:checked ) ~ .tab[data-tab="0"],
+	.tab-titles:has( input[value="1"]:checked ) ~ .tab[data-tab="1"],
+	.tab-titles:has( input[value="2"]:checked ) ~ .tab[data-tab="2"],
+	.tab-titles:has( input[value="3"]:checked ) ~ .tab[data-tab="3"],
+	.tab-titles:has( input[value="4"]:checked ) ~ .tab[data-tab="4"],
+	.tab-titles:has( input[value="5"]:checked ) ~ .tab[data-tab="5"],
+	.tab-titles:has( input[value="6"]:checked ) ~ .tab[data-tab="6"],
+	.tab-titles:has( input[value="7"]:checked ) ~ .tab[data-tab="7"],
+	.tab-titles:has( input[value="8"]:checked ) ~ .tab[data-tab="8"],
+	.tab-titles:has( input[value="9"]:checked ) ~ .tab[data-tab="9"],
+	/* Increase as needed */
+)
+{
+	display: block;
+	background-color: var(--gray-200);
+	padding: 1rem;
+}
+
+/* SVG container */
+
+.svg-container {
+	margin-inline: auto;
+	max-width: 80%;
+}
+
+.svg-container.small {
+	max-height: 500px;
+}
+
+.svg-container.small > svg {
+	max-width: inherit;
+	max-height: inherit;
+	margin-inline: auto;
+}

@@ -1,0 +1,1003 @@
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: #111;
+  overflow: hidden;
+}
+
+.robot-page-background {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 94%;
+  height: auto;
+  max-height: 94%;
+  object-fit: contain;
+  object-position: center;
+  transform: translate(-50%, -50%);
+}
+
+.robot-data-stream {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: clamp(4.5rem, 8vw, 10rem);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.9;
+  contain: strict;
+  mask-image: linear-gradient(to top, #000 5%, #000 78%, transparent 100%);
+}
+
+.robot-data-stream--left { left: 0; }
+.robot-data-stream--right { right: 0; }
+
+.robot-data-stream::after {
+  content: "";
+  position: absolute;
+  inset: -15% 0 auto;
+  height: 14%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 107, 0, 0.1), transparent);
+  animation: robot-scan 8s linear infinite;
+}
+
+.robot-data-column {
+  position: absolute;
+  bottom: -16rem;
+  left: var(--x);
+  display: block;
+  color: rgba(255, 107, 0, var(--alpha));
+  font: 700 var(--size)/1.15 "Courier New", monospace;
+  letter-spacing: 0.06em;
+  text-align: center;
+  white-space: pre-line;
+  text-shadow: 0 0 0.35rem rgba(255, 92, 0, 0.72);
+  animation:
+    robot-data-rise var(--duration) linear var(--delay) infinite,
+    robot-data-flicker 2.8s steps(4, end) var(--delay) infinite;
+  will-change: transform, opacity;
+}
+
+.robot-character-glow {
+  position: fixed;
+  z-index: 2;
+  left: 50%;
+  bottom: 0.5%;
+  width: 7rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 107, 0, 0.24), rgba(255, 107, 0, 0.07) 48%, transparent 73%);
+  filter: blur(0.35rem);
+  transform: translateX(-50%);
+  animation: robot-glow-pulse 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.robot-home-hotspot {
+  position: fixed;
+  z-index: 8;
+  left: 50%;
+  bottom: 0.35%;
+  display: block;
+  width: 5rem;
+  height: 4rem;
+  transform: translateX(-50%);
+  background: transparent;
+  cursor: pointer;
+}
+
+.robot-home-button {
+  position: fixed;
+  z-index: 9;
+  top: clamp(3.6rem, 7.8vh, 5.2rem);
+  right: clamp(5.5rem, 10.5vw, 13rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 9.5rem;
+  min-height: 2.15rem;
+  padding: 0.48rem 0.85rem;
+  border: 1px solid rgba(83, 225, 228, 0.68);
+  background: rgba(7, 14, 15, 0.82);
+  color: #8ffcff;
+  font: 700 0.76rem/1 Consolas, "Courier New", monospace;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  box-shadow: inset 0 0 0.8rem rgba(0, 226, 230, 0.08), 0 0 0.75rem rgba(0, 226, 230, 0.16);
+  clip-path: polygon(0.4rem 0, 100% 0, 100% calc(100% - 0.4rem), calc(100% - 0.4rem) 100%, 0 100%, 0 0.4rem);
+  transition: color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.robot-home-button:visited { color: #8ffcff; }
+
+.robot-home-button:is(:hover, :focus-visible) {
+  border-color: #ff7c34;
+  color: #ff9a61;
+  box-shadow: inset 0 0 0.9rem rgba(255, 107, 0, 0.1), 0 0 0.9rem rgba(255, 107, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.evora-console {
+  position: fixed;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  grid-template-columns: minmax(23rem, 1.08fr) minmax(31rem, 1fr);
+  gap: clamp(1.15rem, 2.2vw, 2.6rem);
+  width: min(86vw, 96rem);
+  height: min(72vh, 46rem);
+  transform: translate(-50%, -50%);
+  color: #f1eee8;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.evora-stage,
+.evora-chat-panel {
+  position: relative;
+  min-width: 0;
+  border: 1px solid rgba(255, 113, 34, 0.48);
+  background: rgba(7, 10, 11, 0.63);
+  box-shadow:
+    inset 0 0 2rem rgba(0, 0, 0, 0.75),
+    0 0 1rem rgba(255, 107, 0, 0.08);
+  backdrop-filter: blur(2px);
+}
+
+.evora-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  clip-path: polygon(0.85rem 0, 100% 0, 100% calc(100% - 0.85rem), calc(100% - 0.85rem) 100%, 0 100%, 0 0.85rem);
+}
+
+.evora-stage-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(0, 221, 225, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 221, 225, 0.12) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+  mask-image: radial-gradient(circle at center, #000, transparent 78%);
+}
+
+.evora-signal-label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  color: #7ceff1;
+  font-size: 0.69rem;
+  letter-spacing: 0.13em;
+  text-shadow: 0 0 0.45rem rgba(0, 229, 232, 0.6);
+}
+
+.evora-signal-label span {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.38rem;
+  border-radius: 50%;
+  background: #ff7023;
+  box-shadow: 0 0 0.6rem #ff6b00;
+  animation: evora-signal-pulse 1.8s ease-in-out infinite;
+}
+
+.evora-portrait-frame {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  isolation: isolate;
+  filter: drop-shadow(0 0 1.35rem rgba(255, 107, 0, 0.2));
+  animation: evora-float 4.6s ease-in-out infinite;
+}
+
+.evora-portrait-frame::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 8% 5%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, transparent 52%, rgba(5, 7, 8, 0.18) 72%, rgba(5, 7, 8, 0.78) 100%);
+  pointer-events: none;
+}
+
+.evora-portrait {
+  grid-area: 1 / 1;
+  display: block;
+  max-width: 94%;
+  height: auto;
+  max-height: 88%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.evora-portrait--lounge {
+  width: min(94%, 46rem);
+  border-radius: 1rem;
+  filter: brightness(0.9) contrast(1.05) saturate(0.95) drop-shadow(0 0 1rem rgba(255, 103, 20, 0.18));
+  mask-image: radial-gradient(ellipse at center, #000 58%, rgba(0, 0, 0, 0.92) 76%, transparent 100%);
+}
+
+.evora-stage.is-speaking .evora-portrait--lounge {
+  filter: brightness(0.97) contrast(1.06) saturate(1.02) drop-shadow(0 0 1.4rem rgba(255, 103, 20, 0.28));
+  transform: scale(1.012);
+}
+
+.evora-stage-caption {
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+  bottom: 0.65rem;
+  margin: 0;
+  color: rgba(255, 126, 55, 0.72);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+}
+
+.evora-chat-panel {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  border-color: rgba(46, 224, 229, 0.38);
+  clip-path: polygon(0 0, calc(100% - 1.1rem) 0, 100% 1.1rem, 100% 100%, 1.1rem 100%, 0 calc(100% - 1.1rem));
+}
+
+.evora-chat-panel::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(255,255,255,0.11) 4px);
+}
+
+.evora-chat-header {
+  padding: clamp(1rem, 2.2vh, 1.6rem) clamp(1rem, 2vw, 1.65rem) 0.75rem;
+  border-bottom: 1px solid rgba(255, 112, 35, 0.25);
+}
+
+.evora-chat-header h1 {
+  margin: 0.2rem 0 0.45rem;
+  color: #ff782f;
+  font-size: clamp(1.75rem, 2.4vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 0.7rem rgba(255, 88, 0, 0.38);
+}
+
+.evora-chat-header > p:last-child {
+  max-width: 49rem;
+  margin: 0;
+  color: #a9b8b8;
+  font-size: clamp(0.84rem, 1vw, 1rem);
+  line-height: 1.5;
+}
+
+.evora-kicker {
+  margin: 0;
+  color: #6fe5e9;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-shadow: 0 0 0.55rem rgba(0, 225, 230, 0.48);
+}
+
+.evora-quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.65rem clamp(1rem, 2vw, 1.65rem);
+  border-bottom: 1px solid rgba(62, 228, 230, 0.16);
+}
+
+.evora-quick-prompts button,
+.evora-composer button {
+  border: 1px solid rgba(255, 119, 43, 0.62);
+  background: rgba(17, 22, 23, 0.92);
+  color: #f1a276;
+  font: 700 0.82rem/1 Consolas, "Courier New", monospace;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.evora-quick-prompts button {
+  padding: 0.48rem 0.68rem;
+  clip-path: polygon(0.35rem 0, 100% 0, 100% calc(100% - 0.35rem), calc(100% - 0.35rem) 100%, 0 100%, 0 0.35rem);
+}
+
+.evora-quick-prompts button:hover,
+.evora-composer button:hover {
+  border-color: #72f3f4;
+  color: #8ffcff;
+  box-shadow: 0 0 0.75rem rgba(0, 226, 230, 0.19);
+}
+
+.evora-quick-prompts button:active,
+.evora-composer button:active { transform: translateY(1px); }
+
+.evora-messages {
+  min-height: 0;
+  padding: 1rem clamp(0.85rem, 2vw, 1.5rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ff6f23 rgba(0, 0, 0, 0.36);
+}
+
+.evora-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.evora-message--user { justify-content: flex-end; }
+
+.evora-message-avatar {
+  flex: 0 0 3.15rem;
+  width: 3.15rem;
+  height: 3.15rem;
+  object-fit: contain;
+  object-position: center;
+  border: 1px solid rgba(90, 238, 241, 0.6);
+  background: #090b0c;
+  box-shadow: 0 0 0.65rem rgba(0, 226, 230, 0.18);
+  image-rendering: pixelated;
+  clip-path: polygon(0.35rem 0, 100% 0, 100% calc(100% - 0.35rem), calc(100% - 0.35rem) 100%, 0 100%, 0 0.35rem);
+}
+
+.evora-message-bubble {
+  max-width: min(82%, 44rem);
+  padding: 0.66rem 0.82rem 0.72rem;
+  border: 1px solid rgba(61, 224, 228, 0.4);
+  border-radius: 0.15rem 0.7rem 0.7rem 0.7rem;
+  background: rgba(12, 18, 19, 0.86);
+  box-shadow: 0 0 0.8rem rgba(0, 221, 225, 0.06);
+}
+
+.evora-message--user .evora-message-bubble {
+  border-color: rgba(255, 112, 35, 0.55);
+  border-radius: 0.7rem 0.15rem 0.7rem 0.7rem;
+  background: rgba(33, 18, 11, 0.82);
+  box-shadow: 0 0 0.8rem rgba(255, 107, 0, 0.07);
+}
+
+.evora-message-author {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #67e4e7;
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-shadow: 0 0 0.4rem rgba(0, 225, 230, 0.42);
+}
+
+.evora-message--user .evora-message-author {
+  color: #ff8a4a;
+  text-align: right;
+  text-shadow: 0 0 0.4rem rgba(255, 107, 0, 0.35);
+}
+
+.evora-message-bubble p {
+  margin: 0;
+  color: #e9efec;
+  font-size: clamp(0.88rem, 1vw, 1.03rem);
+  line-height: 1.56;
+  white-space: pre-wrap;
+}
+
+.evora-message-bubble p.is-typing::after {
+  content: "_";
+  color: #ff7c34;
+  animation: evora-cursor 0.7s steps(1, end) infinite;
+}
+
+.evora-composer {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.45rem;
+  padding: 0.78rem clamp(0.85rem, 2vw, 1.5rem);
+  border-top: 1px solid rgba(255, 112, 35, 0.3);
+  background: rgba(4, 7, 8, 0.9);
+}
+
+.evora-composer input {
+  min-width: 0;
+  padding: 0.68rem 0.8rem;
+  border: 1px solid rgba(77, 224, 227, 0.45);
+  outline: none;
+  background: rgba(11, 20, 21, 0.95);
+  color: #f2f5f2;
+  font: 0.95rem/1.2 Consolas, "Courier New", monospace;
+  caret-color: #ff752e;
+  box-shadow: inset 0 0 0.7rem rgba(0, 0, 0, 0.65);
+}
+
+.evora-composer input:focus {
+  border-color: #6deef0;
+  box-shadow: inset 0 0 0.7rem rgba(0, 0, 0, 0.65), 0 0 0.6rem rgba(0, 224, 228, 0.14);
+}
+
+.evora-composer button { padding: 0.6rem 0.85rem; }
+.evora-composer .evora-send {
+  border-color: #ff742c;
+  background: #c74408;
+  color: #fff5ed;
+  box-shadow: 0 0 0.65rem rgba(255, 84, 0, 0.22);
+}
+
+.evora-composer .evora-clear {
+  border-color: rgba(111, 231, 234, 0.46);
+  color: #89e8e9;
+}
+
+.robot-home-hotspot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.2rem;
+  width: 3.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 107, 0, 0.26), rgba(255, 107, 0, 0.08) 48%, transparent 74%);
+  filter: blur(0.3rem);
+  transform: translateX(-50%);
+  animation: robot-hotspot-glow 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.robot-home-hotspot:focus-visible {
+  outline: 1px solid rgba(255, 126, 44, 0.85);
+  outline-offset: -0.4rem;
+}
+
+@keyframes robot-data-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  9% { opacity: 0.85; }
+  76% { opacity: 0.62; }
+  100% { transform: translate3d(0, -125vh, 0); opacity: 0; }
+}
+
+@keyframes robot-data-flicker {
+  0%, 100% { filter: brightness(0.8); }
+  45% { filter: brightness(1.3); }
+  55% { filter: brightness(0.65); }
+  80% { filter: brightness(1.1); }
+}
+
+@keyframes robot-scan {
+  from { transform: translateY(0); }
+  to { transform: translateY(850%); }
+}
+
+@keyframes robot-glow-pulse {
+  0%, 100% { opacity: 0.45; transform: translateX(-50%) scale(0.92); }
+  50% { opacity: 0.85; transform: translateX(-50%) scale(1.08); }
+}
+
+@keyframes robot-hotspot-glow {
+  0%, 100% { opacity: 0.42; transform: translateX(-50%) scale(0.92); }
+  50% { opacity: 0.72; transform: translateX(-50%) scale(1.06); }
+}
+
+@keyframes evora-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.7rem); }
+}
+
+@keyframes evora-signal-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes evora-cursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@media (max-width: 700px) {
+  .robot-data-stream { width: 3.25rem; opacity: 0.72; }
+  .robot-data-column:nth-child(even) { display: none; }
+
+  html,
+  body {
+    min-height: 100%;
+    overflow: auto;
+  }
+
+  .robot-page-background {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+  }
+
+  .evora-console {
+    position: relative;
+    inset: auto;
+    top: auto;
+    left: auto;
+    z-index: 4;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    width: calc(100% - 2.2rem);
+    min-height: calc(100vh - 6.5rem);
+    height: auto;
+    margin: 3.7rem auto 5.2rem;
+    transform: none;
+  }
+
+  .evora-stage { min-height: 32vh; }
+  .evora-portrait--lounge { width: min(92%, 34rem); max-height: 30vh; }
+  .evora-chat-panel { min-height: 58vh; }
+  .evora-composer { grid-template-columns: minmax(0, 1fr) auto; }
+  .evora-composer .evora-clear { grid-column: 1 / -1; }
+  .evora-message-bubble { max-width: 86%; }
+  .robot-home-hotspot { position: fixed; }
+  .robot-home-button {
+    top: 0.8rem;
+    right: 0.8rem;
+    min-width: 8.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot-data-column,
+  .robot-data-stream::after,
+  .robot-character-glow,
+  .robot-home-hotspot::before,
+  .evora-portrait-frame,
+  .evora-signal-label span { animation-play-state: paused; }
+}
+
+/* EVORA entity observation / communication layout */
+.evora-console {
+  grid-template-columns: minmax(20rem, 38fr) minmax(32rem, 62fr);
+  gap: clamp(0.8rem, 1.15vw, 1.35rem);
+  width: min(90vw, 112rem);
+  height: clamp(41rem, 76vh, 46rem);
+}
+
+.evora-entity-column {
+  display: grid;
+  grid-template-rows: minmax(22rem, 58fr) minmax(17rem, 42fr);
+  gap: clamp(0.55rem, 0.75vw, 0.8rem);
+  min-width: 0;
+  min-height: 0;
+}
+
+.evora-entity-column .evora-stage {
+  min-width: 0;
+  min-height: 0;
+}
+
+.evora-entity-column .evora-systems {
+  grid-template-rows: auto auto auto;
+  gap: 0.45rem;
+  min-height: 0;
+  padding-right: 0.18rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(89, 198, 196, 0.52) rgba(5, 13, 15, 0.72);
+}
+
+.evora-entity-column .evora-systems::-webkit-scrollbar { width: 0.34rem; }
+.evora-entity-column .evora-systems::-webkit-scrollbar-track { background: rgba(5, 13, 15, 0.72); }
+.evora-entity-column .evora-systems::-webkit-scrollbar-thumb { background: rgba(89, 198, 196, 0.52); }
+
+.evora-entity-column .system-card { padding-bottom: 0.35rem; }
+.evora-entity-column .system-card .panel-heading {
+  min-height: 1.55rem;
+  padding: 0.3rem 0.55rem;
+}
+.evora-entity-column .status-item { padding: 0.28rem 0.58rem 0; }
+.evora-entity-column .status-track { height: 0.42rem; margin-top: 0.16rem; }
+.evora-entity-column .evolution-row { margin: 0.38rem 0.58rem 0.2rem; padding: 0.35rem 0.48rem; }
+.evora-entity-column .data-list { padding: 0.25rem 0.58rem 0; }
+.evora-entity-column .data-list div { padding: 0.2rem 0; }
+.evora-entity-column .core-list { gap: 0.26rem; padding: 0.42rem 0.58rem 0.34rem; }
+.evora-entity-column .core-list li { padding-bottom: 0.2rem; }
+
+.evora-chat-panel {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.evora-chat-header > p:last-child { max-width: none; }
+.evora-messages { min-height: 0; }
+
+@media (max-width: 1050px) {
+  .evora-console {
+    grid-template-columns: minmax(18rem, 38fr) minmax(27rem, 62fr);
+    width: 95vw;
+  }
+  .entity-readout dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 820px) {
+  .evora-console {
+    position: relative;
+    inset: auto;
+    grid-template-columns: 1fr;
+    width: calc(100% - 2rem);
+    height: auto;
+    margin: 3.8rem auto 5.5rem;
+    transform: none;
+  }
+  .evora-entity-column {
+    grid-template-rows: minmax(30rem, 56vh) auto;
+  }
+  .evora-entity-column .evora-stage { min-height: 0; }
+  .evora-entity-column .evora-systems {
+    min-height: 0;
+    overflow: visible;
+  }
+  .evora-chat-panel {
+    grid-column: auto;
+    min-height: 38rem;
+  }
+}
+
+/* Desktop-only proportional enlargement of the complete EVORA interface. */
+@media (min-width: 1051px) {
+  .evora-console {
+    transform: translate(-50%, -50%) scale(1.1);
+    transform-origin: center center;
+  }
+}
+
+@media (max-width: 560px) {
+  .evora-entity-column { grid-template-rows: minmax(27rem, 58vh) auto; }
+  .evora-chat-panel { min-height: 35rem; }
+}
+
+.evora-thinking-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  min-height: 1.1rem;
+}
+
+.evora-thinking-dots i {
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: #63c8c2;
+  box-shadow: 0 0 0.45rem rgba(99, 200, 194, 0.6);
+  animation: evora-message-load 1s ease-in-out infinite;
+}
+
+.evora-thinking-dots i:nth-child(2) { animation-delay: 0.16s; }
+.evora-thinking-dots i:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes evora-message-load {
+  0%, 70%, 100% { opacity: 0.25; transform: translateY(0); }
+  35% { opacity: 1; transform: translateY(-0.18rem); }
+}
+
+/* EVORA Digital Life Interface */
+.evora-console {
+  grid-template-columns: minmax(0, 30fr) minmax(0, 25fr) minmax(0, 45fr);
+  gap: clamp(0.55rem, 0.8vw, 0.9rem);
+  width: min(88vw, 112rem);
+  height: clamp(37.5rem, 72vh, 43.5rem);
+}
+
+.interface-panel,
+.system-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 111, 20, 0.36);
+  background: linear-gradient(145deg, rgba(7, 12, 13, 0.94), rgba(10, 18, 19, 0.82));
+  box-shadow: inset 0 0 2.4rem rgba(0, 0, 0, 0.56), 0 0 1.1rem rgba(255, 99, 0, 0.06);
+  clip-path: polygon(0.8rem 0, 100% 0, 100% calc(100% - 0.8rem), calc(100% - 0.8rem) 100%, 0 100%, 0 0.8rem);
+}
+
+.panel-heading {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  min-height: 2rem;
+  padding: 0.48rem 0.68rem;
+  border-bottom: 1px solid rgba(255, 107, 0, 0.24);
+  color: #ff8a3d;
+  font-size: clamp(0.62rem, 0.56vw, 0.76rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.live-indicator,
+.is-active { color: #77d9d9; }
+.live-indicator i,
+.connection-light {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.36rem;
+  border-radius: 50%;
+  background: #68e1de;
+  box-shadow: 0 0 0.65rem #39d4d1;
+  animation: interface-signal 1.8s steps(2, end) infinite;
+}
+
+.evora-stage {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+}
+
+.evora-stage-grid {
+  position: absolute;
+  inset: 2rem 0 0;
+  opacity: 0.17;
+  background-image: linear-gradient(rgba(82, 211, 210, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(82, 211, 210, 0.09) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 78%, transparent);
+}
+
+.evora-scan-beam {
+  position: absolute;
+  z-index: 3;
+  top: 2.2rem;
+  left: 4%;
+  width: 92%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(104, 224, 220, 0.82), transparent);
+  box-shadow: 0 0 0.8rem rgba(104, 224, 220, 0.42);
+  animation: interface-scan 6.5s linear infinite;
+  pointer-events: none;
+}
+
+.evora-portrait-frame {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: calc(100% - 1.3rem);
+  height: calc(100% - 1rem);
+  min-height: 0;
+  margin: 0.5rem auto;
+  border: 1px solid rgba(96, 215, 213, 0.22);
+  background: radial-gradient(circle at 52% 50%, rgba(255, 105, 0, 0.11), transparent 58%);
+  animation: interface-visual-breathe 5s ease-in-out infinite;
+}
+
+.evora-portrait--lounge {
+  width: 96%;
+  height: 96%;
+  max-height: none;
+  object-fit: contain;
+  image-rendering: auto;
+  filter: brightness(0.88) saturate(0.9) contrast(1.1) drop-shadow(0 0 0.8rem rgba(255, 105, 0, 0.2));
+  mask-image: radial-gradient(ellipse at center, #000 62%, rgba(0, 0, 0, 0.94) 80%, transparent 100%);
+}
+
+.hud-corner { position: absolute; width: 1.25rem; height: 1.25rem; border-color: #ff7626; opacity: 0.75; }
+.hud-corner--tl { top: 0.32rem; left: 0.32rem; border-top: 1px solid; border-left: 1px solid; }
+.hud-corner--tr { top: 0.32rem; right: 0.32rem; border-top: 1px solid; border-right: 1px solid; }
+.hud-corner--bl { bottom: 0.32rem; left: 0.32rem; border-bottom: 1px solid; border-left: 1px solid; }
+.hud-corner--br { right: 0.32rem; bottom: 0.32rem; border-right: 1px solid; border-bottom: 1px solid; }
+
+.entity-readout {
+  position: relative;
+  z-index: 4;
+  padding: 0.6rem 0.72rem 0.72rem;
+  border-top: 1px solid rgba(255, 107, 0, 0.22);
+  color: #e5eeee;
+  font-size: clamp(0.62rem, 0.55vw, 0.75rem);
+}
+.entity-readout > strong { color: #ff8234; letter-spacing: 0.12em; }
+.entity-readout > span { margin-left: 0.5rem; color: #82d5d5; letter-spacing: 0.08em; }
+.entity-readout dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.38rem; margin: 0.55rem 0 0; }
+.entity-readout dl div { min-width: 0; padding: 0.34rem; background: rgba(16, 33, 35, 0.68); }
+.entity-readout dt { color: #789395; }
+.entity-readout dd { margin: 0.18rem 0 0; overflow-wrap: anywhere; }
+
+.evora-systems {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: clamp(0.5rem, 0.65vw, 0.75rem);
+  min-width: 0;
+  min-height: 0;
+}
+.system-card { padding-bottom: 0.62rem; border-color: rgba(84, 209, 208, 0.31); }
+.system-card .panel-heading { color: #ffd274; border-bottom-color: rgba(84, 209, 208, 0.22); }
+.refresh-code { color: #618b8e; animation: interface-refresh 4.5s steps(1, end) infinite; }
+
+.status-item { padding: 0.5rem 0.7rem 0; }
+.status-item > div:first-child { display: flex; justify-content: space-between; gap: 0.5rem; color: #dae7e7; font-size: clamp(0.66rem, 0.62vw, 0.82rem); }
+.status-item output { color: #75cfd0; }
+.status-track { height: 0.55rem; margin-top: 0.25rem; overflow: hidden; border: 1px solid #335358; background: rgba(1, 8, 10, 0.75); }
+.status-track i { display: block; width: var(--level); height: 100%; background: repeating-linear-gradient(90deg, #70c0c7 0 0.55rem, #4d939b 0.55rem 0.64rem); box-shadow: 0 0 0.6rem rgba(86, 209, 211, 0.38); transform-origin: left; animation: interface-bar-load 2.2s cubic-bezier(.2,.75,.25,1) both; }
+.evolution-row { display: flex; justify-content: space-between; gap: 0.5rem; margin: 0.68rem; padding: 0.5rem 0.58rem; border: 1px solid rgba(147, 112, 164, 0.42); border-radius: 0.45rem; background: rgba(47, 35, 58, 0.45); color: #eee7ef; font-size: clamp(0.62rem, 0.58vw, 0.76rem); }
+.evolution-row strong { color: #f1a8dc; font-weight: 700; }
+.loading-dots::after { content: "..."; display: inline-block; width: 1.1em; overflow: hidden; vertical-align: bottom; animation: interface-dots 1.4s steps(4, end) infinite; }
+
+.data-list { margin: 0; padding: 0.42rem 0.7rem 0; }
+.data-list div { display: grid; grid-template-columns: 38% 62%; gap: 0.35rem; padding: 0.32rem 0; border-bottom: 1px solid rgba(83, 139, 143, 0.16); font-size: clamp(0.6rem, 0.53vw, 0.72rem); }
+.data-list dt { color: #768f91; }
+.data-list dd { margin: 0; color: #e5eeee; overflow-wrap: anywhere; }
+
+.core-card { min-height: 0; }
+.core-list { position: relative; z-index: 2; display: grid; gap: 0.5rem; margin: 0; padding: 0.68rem; list-style: none; }
+.core-list li { display: grid; grid-template-columns: 0.5rem minmax(0, 1fr); gap: 0.16rem 0.45rem; align-items: center; padding-bottom: 0.38rem; border-bottom: 1px solid rgba(91, 147, 151, 0.16); color: #d6e3e3; font-size: clamp(0.6rem, 0.52vw, 0.71rem); }
+.core-list li i { grid-row: 1 / 3; width: 0.42rem; height: 0.42rem; border-radius: 50%; background: #64dc9c; box-shadow: 0 0 0.6rem rgba(100, 220, 156, 0.7); animation: interface-signal 2s steps(2,end) infinite; }
+.core-list li i.researching { background: #69ccd6; box-shadow: 0 0 0.6rem rgba(105,204,214,.65); }
+.core-list li i.future { background: #ff852f; box-shadow: 0 0 0.6rem rgba(255,133,47,.6); }
+.core-list strong { color: #6acfd0; font-size: 0.9em; letter-spacing: 0.06em; }
+.core-flow { position: absolute; inset: auto 0 0; display: flex; gap: 0.45rem; height: 1.15rem; padding: 0 0.65rem; opacity: 0.34; }
+.core-flow span { width: 18%; height: 1px; background: linear-gradient(90deg, transparent, #64d0d1, transparent); animation: interface-flow 3.5s linear infinite; }
+.core-flow span:nth-child(2) { animation-delay: -.8s; }.core-flow span:nth-child(3) { animation-delay: -1.7s;}.core-flow span:nth-child(4) { animation-delay: -2.5s;}
+
+.evora-chat-panel { min-height: 0; border-color: rgba(75, 214, 210, 0.38); animation: interface-terminal-breathe 4.8s ease-in-out infinite; }
+.evora-chat-header { padding: clamp(0.7rem, 0.8vw, 1rem); }
+.evora-chat-header h1 { font-size: clamp(1.25rem, 1.45vw, 1.8rem); letter-spacing: 0.055em; }
+.evora-chat-header > p:last-child { max-width: 35rem; }
+.evora-kicker { display: flex; align-items: center; }
+.evora-messages { background-image: linear-gradient(rgba(68, 203, 199, 0.025) 1px, transparent 1px); background-size: 100% 1.8rem; }
+.evora-message-bubble { border-radius: 0.18rem; box-shadow: inset 0 0 0.9rem rgba(0,0,0,.25), 0 0 0.65rem rgba(68,200,198,.05); }
+.evora-message--user .evora-message-bubble { border-color: rgba(255, 119, 37, 0.5); background: rgba(49, 25, 12, 0.62); }
+.evora-composer input:focus { box-shadow: inset 0 0 0.6rem rgba(60, 210, 205, 0.08), 0 0 0.65rem rgba(60, 210, 205, 0.1); }
+
+@keyframes interface-signal { 0%,45%{opacity:1} 46%,65%{opacity:.35} 66%,100%{opacity:1} }
+@keyframes interface-scan { 0%{transform:translateY(0);opacity:0} 12%{opacity:.8} 84%{opacity:.45} 100%{transform:translateY(calc(72vh - 8rem));opacity:0} }
+@keyframes interface-visual-breathe { 0%,100%{box-shadow:inset 0 0 1rem rgba(45,190,187,.04)} 50%{box-shadow:inset 0 0 2rem rgba(45,190,187,.1)} }
+@keyframes interface-bar-load { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+@keyframes interface-refresh { 0%,92%{opacity:.45} 93%{opacity:1} 96%{opacity:.2} 100%{opacity:.45} }
+@keyframes interface-dots { from{width:0} to{width:1.1em} }
+@keyframes interface-flow { from{transform:translateX(-120%);opacity:0} 25%,70%{opacity:1} to{transform:translateX(520%);opacity:0} }
+@keyframes interface-terminal-breathe { 0%,100%{box-shadow:inset 0 0 2.4rem rgba(0,0,0,.56),0 0 .75rem rgba(71,211,208,.05)} 50%{box-shadow:inset 0 0 2.4rem rgba(0,0,0,.56),0 0 1.1rem rgba(71,211,208,.14)} }
+
+@media (max-width: 1050px) {
+  .evora-console { grid-template-columns: minmax(15rem, 30fr) minmax(13rem, 25fr) minmax(22rem, 45fr); width: 94vw; }
+  .entity-readout dl { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 820px) {
+  html, body { min-height: 100%; overflow: auto; }
+  .evora-console { position: relative; inset: auto; grid-template-columns: 1fr 1fr; width: calc(100% - 2rem); height: auto; margin: 3.8rem auto 5.5rem; transform: none; }
+  .evora-stage { min-height: 34rem; }
+  .evora-systems { min-height: 34rem; }
+  .evora-chat-panel { grid-column: 1 / -1; min-height: 38rem; }
+}
+
+@media (max-width: 560px) {
+  .evora-console { grid-template-columns: 1fr; }
+  .evora-stage, .evora-systems, .evora-chat-panel { grid-column: auto; }
+  .evora-stage { min-height: 31rem; }
+  .evora-chat-panel { min-height: 35rem; }
+  .entity-readout dl { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evora-scan-beam, .live-indicator i, .connection-light, .status-track i, .refresh-code,
+  .loading-dots::after, .core-list li i, .core-flow span, .evora-chat-panel, .evora-portrait-frame { animation: none; }
+}
+
+/* Two-zone layout: observe EVORA on the left, communicate on the right. */
+.evora-console {
+  grid-template-columns: auto minmax(32rem, 1fr);
+  gap: clamp(0.8rem, 1.15vw, 1.35rem);
+  width: min(90vw, 112rem);
+  height: clamp(41rem, 76vh, 46rem);
+}
+
+.evora-entity-column {
+  display: grid;
+  grid-template-rows: minmax(22rem, 58fr) minmax(17rem, 42fr);
+  gap: clamp(0.55rem, 0.75vw, 0.8rem);
+  justify-self: center;
+  width: auto;
+  height: 100%;
+  margin-left: clamp(2rem, 2.5vw, 3rem);
+  aspect-ratio: 11 / 20;
+  min-width: 0;
+  min-height: 0;
+}
+
+.evora-entity-column .evora-stage {
+  min-width: 0;
+  min-height: 0;
+}
+
+.evora-entity-column .evora-systems {
+  grid-template-rows: auto auto auto;
+  gap: 0.45rem;
+  min-height: 0;
+  padding-right: 0.2rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(89, 205, 202, 0.55) rgba(4, 12, 14, 0.72);
+}
+
+.evora-entity-column .evora-systems::-webkit-scrollbar { width: 0.35rem; }
+.evora-entity-column .evora-systems::-webkit-scrollbar-track { background: rgba(4, 12, 14, 0.72); }
+.evora-entity-column .evora-systems::-webkit-scrollbar-thumb { background: rgba(89, 205, 202, 0.55); }
+
+.evora-entity-column .system-card { padding-bottom: 0.3rem; }
+.evora-entity-column .panel-heading { min-height: 1.6rem; padding: 0.32rem 0.52rem; font-size: 0.61rem; }
+.evora-entity-column .status-item { padding: 0.3rem 0.52rem 0; }
+.evora-entity-column .status-item > div:first-child { font-size: 0.62rem; }
+.evora-entity-column .status-track { height: 0.42rem; margin-top: 0.15rem; }
+.evora-entity-column .evolution-row { margin: 0.42rem 0.52rem; padding: 0.34rem 0.45rem; font-size: 0.59rem; }
+.evora-entity-column .data-list { padding: 0.26rem 0.52rem 0; }
+.evora-entity-column .data-list div { padding: 0.21rem 0; font-size: 0.58rem; }
+.evora-entity-column .core-list { gap: 0.24rem; padding: 0.4rem 0.52rem; }
+.evora-entity-column .core-list li { padding-bottom: 0.2rem; font-size: 0.57rem; }
+
+.evora-chat-panel {
+  justify-self: center;
+  width: 92%;
+  height: 100%;
+}
+
+@media (max-width: 1050px) {
+  .evora-console { grid-template-columns: auto minmax(28rem, 1fr); width: 94vw; }
+  .entity-readout dl { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 820px) {
+  html, body { min-height: 100%; overflow: auto; }
+  .evora-console {
+    position: relative;
+    inset: auto;
+    grid-template-columns: 1fr;
+    width: calc(100% - 2rem);
+    height: auto;
+    margin: 3.8rem auto 5.5rem;
+    transform: none;
+  }
+  .evora-entity-column { grid-template-rows: minmax(32rem, 58vh) auto; }
+  .evora-entity-column {
+    justify-self: stretch;
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+    aspect-ratio: auto;
+  }
+  .evora-entity-column .evora-systems { overflow: visible; }
+  .evora-chat-panel { min-height: 38rem; }
+  .evora-chat-panel {
+    justify-self: stretch;
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .evora-entity-column { grid-template-rows: minmax(28rem, 54vh) auto; }
+  .evora-chat-panel { min-height: 35rem; }
+  .entity-readout dl { grid-template-columns: 1fr; }
+}

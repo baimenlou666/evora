@@ -1,0 +1,184 @@
+.glass-tube {
+    --green: #6CB328;
+    --green-light: #AFE356;
+    --green-dark: #38741A;
+
+    --_margin-left: 3rem;
+
+    width: calc( 95vw - var(--_margin-left) );
+    min-height: 10rem;
+
+    background-color: var(--green-light);
+    box-shadow:
+        -0.5rem -1rem inset var(--green),
+        0rem 0.2rem inset var(--green-dark);
+
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    margin-left: var(--_margin-left);
+    border-top-right-radius: 100vw;
+    border-bottom-right-radius: 100vw;
+
+    color: black;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.glass-tube::before {
+    content: '';
+    position: absolute;
+
+    width: var(--_margin-left);
+
+    background-image: url('/assets/images/tube-holder.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+
+    top: 0;
+    left: calc( var(--_margin-left) * -1 );
+    bottom: 0;
+}
+
+.glass-tube h2 { font-size: xx-large; }
+
+.glass-tube a { color: var(--green-dark); }
+.glass-tube a:is( :hover, :focus ) { color: var(--green); }
+
+.tube-holder {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+
+    margin-bottom: 4rem;
+}
+
+/* Find Familiar's book stacks */
+
+.book-pile {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    margin-top: 15rem;
+
+    isolation: isolate;
+    align-items: center;
+
+    container-type: inline-size;
+}
+
+.book-pile > *:nth-child(1) { --child-number: 1 }
+.book-pile > *:nth-child(2) { --child-number: 2 }
+.book-pile > *:nth-child(3) { --child-number: 3 }
+.book-pile > *:nth-child(4) { --child-number: 4 }
+.book-pile > *:nth-child(5) { --child-number: 5 }
+.book-pile > *:nth-child(6) { --child-number: 6 }
+.book-pile > *:nth-child(7) { --child-number: 7 }
+.book-pile > *:nth-child(8) { --child-number: 8 }
+.book-pile > *:nth-child(9) { --child-number: 9 }
+
+.book {
+    --cover-main: hsl(10, 50%, 37%);
+    --cover-dark: hsl(10, 50%, 26%);
+    --line-color: hsl(10, 50%, 15%);
+    --page-color: hsl(40, 100%, 75%);
+    --page-color-dark: hsl(40, 35%, 45%);
+    --swew-angle: 26.6666deg;
+    position: relative;
+    z-index: calc( -1 * var(--child-number) );
+
+    width: 30rem;
+    height: 7.5rem;
+    padding: 1rem;
+    border: 0.5rem solid var(--line-color);
+
+    background-color: var(--cover-main);
+
+    transform:
+        skew( 0deg, var(--swew-angle) )
+        scaleX(0.5)
+        translateX(-50%);
+}
+
+.book::before {
+    content: '';
+    position: absolute;
+
+    top: calc( -200% - 0.5rem );
+    left: calc( 50% - 2rem );
+    width: calc( 100% + 1rem );
+    height: 200%;
+
+    background-color: var(--cover-dark);
+    border-block: 0.5rem solid var(--line-color);
+    border-inline: 1rem solid var(--line-color);
+
+    transform:
+        skewX( calc( 90deg + var(--swew-angle) ) );
+}
+
+.book::after {
+    content: '';
+    position: absolute;
+
+    top: calc( -100% - 0.55rem );
+    right: calc( -100% + 2.5rem );
+
+    width: 90%;
+    height: calc( 100% + 1rem );
+    background-image: linear-gradient( to bottom,
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark),
+        var(--page-color), var(--page-color-dark)
+    );
+
+    border-block: 0.5rem solid var(--line-color);
+    border-inline-start: 1rem solid var(--line-color);
+    border-inline-end: 1rem solid transparent;
+
+    transform:
+        skewY( calc( -1 * var(--swew-angle) ) );
+}
+
+.book a {
+    color: var(--text);
+	font-weight: 400;
+    font-size: small;
+}
+
+.book h2 {
+    font-size: x-large;
+    text-align: center;
+}
+
+@container (max-width: 400px) {
+    .book {
+        width: 20rem;
+        height: 5rem;
+    }
+
+    .book h2 {
+        font-size: larger;
+    }
+
+    .book a {
+        font-size: x-small;
+    }
+}
+

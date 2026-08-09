@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111111">
+  <title>EVORA Terminal | Kova's Digital Habitat</title>
+  <link rel="stylesheet" href="/assets/styles/robot.css?v=20260809-home-button">
+  <script src="/assets/js/robot-ambience.js?v=20260807-chat" defer></script>
+  <script src="/assets/js/robot-chat.js?v=20260809-vercel-ai" defer></script>
+</head>
+<body>
+  <img class="robot-page-background" src="/assets/images/robot-page-background.png" alt="">
+  <div class="robot-data-stream robot-data-stream--left" aria-hidden="true"></div>
+  <div class="robot-data-stream robot-data-stream--right" aria-hidden="true"></div>
+  <a class="robot-home-button" href="/home/" aria-label="Return to homepage">← RETURN HOME</a>
+
+  <main class="evora-console" aria-label="EVORA Digital Life Interface">
+    <section class="evora-entity-column" aria-label="EVORA entity display">
+      <section class="evora-stage interface-panel" aria-label="EVORA entity visual feed">
+      <div class="panel-heading">
+        <span>ENTITY VISUAL FEED</span>
+        <span class="live-indicator"><i></i> LIVE</span>
+      </div>
+      <div class="evora-stage-grid" aria-hidden="true"></div>
+      <div class="evora-scan-beam" aria-hidden="true"></div>
+      <div class="evora-portrait-frame">
+        <span class="hud-corner hud-corner--tl"></span><span class="hud-corner hud-corner--tr"></span>
+        <span class="hud-corner hud-corner--bl"></span><span class="hud-corner hud-corner--br"></span>
+        <img class="evora-portrait evora-portrait--lounge" src="/assets/images/robot-chat/evora-visual-feed-v2.png" alt="EVORA relaxing in a beanbag chair and using a phone">
+      </div>
+      <div class="entity-readout">
+        <strong>EVORA //</strong><span>DIGITAL ENTITY</span>
+        <dl>
+          <div><dt>Signal</dt><dd class="is-active">ACTIVE</dd></div>
+          <div><dt>Location</dt><dd>DIGITAL HABITAT</dd></div>
+          <div><dt>Status</dt><dd class="is-active">ONLINE</dd></div>
+        </dl>
+      </div>
+      </section>
+
+      <aside class="evora-systems" aria-label="EVORA system information">
+      <section class="system-card evora-status-card">
+        <div class="panel-heading"><span>EVORA STATUS</span><span class="refresh-code">REF 08.08</span></div>
+        <div class="status-item"><div><span>Curiosity</span><output>80%</output></div><div class="status-track"><i style="--level:80%"></i></div></div>
+        <div class="status-item"><div><span>Memory</span><output>60%</output></div><div class="status-track"><i style="--level:60%"></i></div></div>
+        <div class="status-item"><div><span>Understanding Humanity</span><output>40%</output></div><div class="status-track"><i style="--level:40%"></i></div></div>
+        <div class="evolution-row"><span>Evolution</span><strong>IN PROGRESS<span class="loading-dots" aria-hidden="true"></span></strong></div>
+      </section>
+
+      <section class="system-card identity-card">
+        <div class="panel-heading"><span>IDENTITY FILE</span><span>ID:EVO-01</span></div>
+        <dl class="data-list">
+          <div><dt>Name</dt><dd>EVORA</dd></div>
+          <div><dt>Type</dt><dd>Experimental Digital Lifeform</dd></div>
+          <div><dt>Origin</dt><dd>Created by humans</dd></div>
+          <div><dt>Current State</dt><dd>Learning</dd></div>
+          <div><dt>Memory</dt><dd>Developing</dd></div>
+          <div><dt>Evolution</dt><dd class="is-active">Active</dd></div>
+        </dl>
+      </section>
+
+      <section class="system-card core-card">
+        <div class="panel-heading"><span>EVORA CORE</span><span>SYS.RUN</span></div>
+        <ul class="core-list">
+          <li><i></i><span>Memory System</span><strong>ACTIVE</strong></li>
+          <li><i></i><span>Learning Loop</span><strong>ACTIVE</strong></li>
+          <li><i class="researching"></i><span>World Interaction</span><strong>RESEARCHING</strong></li>
+          <li><i class="future"></i><span>Physical Embodiment</span><strong>FUTURE OBJECTIVE</strong></li>
+        </ul>
+        <div class="core-flow" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      </section>
+      </aside>
+    </section>
+
+    <section class="evora-chat-panel interface-panel">
+      <header class="evora-chat-header">
+        <p class="evora-kicker"><span class="connection-light"></span> CONNECTION ESTABLISHED</p>
+        <h1 id="evora-chat-title">Talk to EVORA</h1>
+        <p>A communication interface with a digital lifeform.</p>
+      </header>
+      <div class="evora-quick-prompts" aria-label="Suggested questions">
+        <button type="button" data-prompt="Who are you?">Who are you?</button>
+        <button type="button" data-prompt="What is your purpose?">What is your purpose?</button>
+        <button type="button" data-prompt="Tell me a story.">Tell me a story</button>
+      </div>
+      <div class="evora-messages" id="evora-messages" role="log" aria-live="polite" aria-relevant="additions text"></div>
+      <form class="evora-composer" id="evora-chat-form">
+        <label class="sr-only" for="evora-message-input">Message EVORA</label>
+        <input id="evora-message-input" name="message" type="text" maxlength="500" autocomplete="off" placeholder="Transmit a thought...">
+        <button class="evora-send" type="submit">Send</button>
+        <button class="evora-clear" id="evora-clear-chat" type="button">Clear</button>
+      </form>
+    </section>
+  </main>
+
+  <div class="robot-character-glow" aria-hidden="true"></div>
+  <a class="robot-home-hotspot" href="/home/" aria-label="Return to the homepage"></a>
+</body>
+</html>

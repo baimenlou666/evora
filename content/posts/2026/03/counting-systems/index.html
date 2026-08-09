@@ -1,0 +1,420 @@
+---
+title: "A summary of counting systems"
+date: 2026-07-14T22:06:00-06:00
+description: "AKA what KFCMan learnt during the last two weeks"
+tags: ["Programming", "Something I learnt"]
+series: []
+---
+
+<main class="frame main-frame single-margin">
+        <header>
+            <h1>A summary of counting systems</h1>
+
+            
+<div class="article-data">
+    
+    <div>
+        
+        <p><b>Date:</b> <time datetime="2026-07-14 22:06:00 -0600 -0600">Jul 14, 2026</time></p><p><b>Tags:</b> <ul class="inline-list">
+    <li><a href="/tags/programming/">Programming</a></li>
+
+    <li><a href="/tags/something-i-learnt/">Something I learnt</a></li>
+</ul></p></div>
+
+    </div>
+
+
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-use-different-bases">Why use different bases?</a></li>
+    <li><a href="#explanation-of-counting-systems">Explanation of counting systems</a>
+      <ul>
+        <li><a href="#how-do-you-convert-between-systems">How do you convert between systems?</a></li>
+      </ul>
+    </li>
+    <li><a href="#operations">Operations</a></li>
+    <li><a href="#but-wait-theres-more">But wait, there&rsquo;s more!</a></li>
+  </ul>
+</nav>
+        </header>
+        <article class="content"><p>Hello! College is still college so I&rsquo;m busy!</p>
+<p>Want to know what I&rsquo;ve been learning? This is a part of the first of my <strong>Digital Electronics</strong> subject.</p>
+<p>I really wanted to write everything down, but seeing as I stop developing blog entries past a certain point, it&rsquo;s better for me to keep it short</p>
+<h2 id="why-use-different-bases">Why use different bases?</h2>
+<p>A <strong>signal</strong> is a segment of information that is transmitted through some medium. The text you are reading right now can be interpreted as a signal, but for the sake of making a signal useful, they&rsquo;re sent with the porpuse of the reciever to act on something.</p>
+<p>Within electronics, voltaje is the most common way sending information, as it is a form of potential energy within electricity, to be more precise, <strong>the amount of energy needed to transport an electric charge across a field.</strong> What&rsquo;s funny about voltaje is that in zones of space where the electric field has the same magnitude, <strong>no energy is needed to transport a charge across that zone.</strong> This is why voltaje is useful across electronic systems. The only energy you need to transport that signal is the one needed to make the voltaje difference across two cables (plus a little bit if you take into account the inner resistence of those cables).</p>
+<p>The easiest way to transport information is to assign different values to a voltage magnitude. ¿You have 0V? That&rsquo;s 0 (of course), but after that? We now have a problem.</p>
+<p>Suppose we set our maximum to 5V and wish to transmit the number <code>420</code>, digit by digit. If we divide 5V on to 10 slots to say that each magnitude is correspondent to a digit, so you end up with a table like this:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">Unit</th>
+					<th>Magnitude</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+					<th>&quot;</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">0-5V</td>
+					<td>0</td>
+					<td>0.5</td>
+					<td>1.0</td>
+					<td>1.5</td>
+					<td>2.0</td>
+					<td>2.5</td>
+					<td>3.0</td>
+					<td>3.5</td>
+					<td>4.0</td>
+					<td>4.5</td>
+					<td>5.0</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">10<sub>b</sub></td>
+					<td>0</td>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+					<td>8</td>
+					<td>9</td>
+					<td>xxx</td>
+			</tr>
+	</tbody>
+</table>
+<p>Which is fine, I guess, but we have a problem now. <strong>Noise.</strong> Noise can alter the meaning of information, and we loose our message. In our previous example, the cap amount of noise needed to alter our digits is ∓0.25V. And a diode uses 0.5V! Even then, what if something alters our message just by existing or emitting foreign electromagnetic waves? <strong>We can&rsquo;t use decimal when transmitting information!</strong></p>
+<p>So what do we do? We use other counting systems. The most commonly used, and that you will encounter in any digital system, are:</p>
+<ul>
+<li>Binary (Base 2)<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
+<li>Octal (Base 8)</li>
+<li>Hexadecimal, or Hex if you&rsquo;re in a hurry (Base 16)</li>
+</ul>
+<h2 id="explanation-of-counting-systems">Explanation of counting systems</h2>
+<p>There&rsquo;s some notation that we need to cover here:</p>
+<p>When writing a number in another counting system, and you need to tell in what base it is written in, you sorround the number in parenthesis, and write the base as a suffix, like this:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Base</th>
+					<th style="text-align: center">Number</th>
+					<th style="text-align: center">Decimal equivalent</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">10</td>
+					<td style="text-align: center">(420)<sub>10</sub></td>
+					<td style="text-align: center">420</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">2</td>
+					<td style="text-align: center">(110100100)<sub>2</sub></td>
+					<td style="text-align: center">420</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">8</td>
+					<td style="text-align: center">(644)<sub>8</sub></td>
+					<td style="text-align: center">420</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">16</td>
+					<td style="text-align: center">(1A4)<sub>16</sub><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></td>
+					<td style="text-align: center">420</td>
+			</tr>
+	</tbody>
+</table>
+<p>Do note that numbers that are already in decimal do not need this extra notation.</p>
+<p>Just like in decimal, a counting system with base <code>r</code> has <code>r-1</code> of coeficients that represent a number, and their position are <strong>weighted,</strong> that is to say, <strong>the digit is multiplied by the base a certain number of times.</strong> In decimal, for example, <code>420</code> can be written in its <strong>expanded form</strong> as <code>4 x 10^2 + 2 x 10^1 + 0 10^0</code>.</p>
+<p>The coefficients are usually represented as <code>a~n~</code> where <code>n</code> is a natural number less than <code>r</code>. Here&rsquo;s the coefficients of the previously mentioned systems:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">Coefficient</th>
+					<th style="text-align: center">Binary</th>
+					<th style="text-align: center">Octal</th>
+					<th style="text-align: center">Decimal</th>
+					<th style="text-align: center">Hex</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">a<sub>0</sub></td>
+					<td style="text-align: center">0</td>
+					<td style="text-align: center">0</td>
+					<td style="text-align: center">0</td>
+					<td style="text-align: center">0</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>1</sub></td>
+					<td style="text-align: center">1</td>
+					<td style="text-align: center">1</td>
+					<td style="text-align: center">1</td>
+					<td style="text-align: center">1</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>2</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">2</td>
+					<td style="text-align: center">2</td>
+					<td style="text-align: center">2</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>3</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">3</td>
+					<td style="text-align: center">3</td>
+					<td style="text-align: center">3</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>4</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">4</td>
+					<td style="text-align: center">4</td>
+					<td style="text-align: center">4</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>5</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">5</td>
+					<td style="text-align: center">5</td>
+					<td style="text-align: center">5</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>6</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">6</td>
+					<td style="text-align: center">6</td>
+					<td style="text-align: center">6</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>7</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">7</td>
+					<td style="text-align: center">7</td>
+					<td style="text-align: center">7</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>8</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">8</td>
+					<td style="text-align: center">8</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>9</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">9</td>
+					<td style="text-align: center">9</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>10</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">A</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>11</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">B</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>12</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">C</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>13</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">D</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>14</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">E</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">a<sub>15</sub></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center"></td>
+					<td style="text-align: center">F</td>
+			</tr>
+	</tbody>
+</table>
+<p>Here&rsquo;s an example of the expanded form of 420, with the digits translated into decimal. You do the math and check the sums are equal to 420.</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Base</th>
+					<th style="text-align: center">Number</th>
+					<th style="text-align: left">Expanded Form</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">10</td>
+					<td style="text-align: center">(420)<sub>10</sub></td>
+					<td style="text-align: left">4x10<sup>2 + 2x10</sup>1</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">2</td>
+					<td style="text-align: center">(110100100)<sub>2</sub></td>
+					<td style="text-align: left">1x2<sup>8 + 1x2</sup>7 + 1x2<sup>5 + 1x2</sup>2</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">8</td>
+					<td style="text-align: center">(644)<sub>8</sub></td>
+					<td style="text-align: left">6x8<sup>2 + 4x8</sup>1 + 4x8^0</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">16</td>
+					<td style="text-align: center">(1A4)<sub>16</sub></td>
+					<td style="text-align: left">1x16<sup>2 + 10x16</sup>1 + 4x16^0</td>
+			</tr>
+	</tbody>
+</table>
+<p>Fractional digits are treated the same as normal, each digit to the left of the dot represents a sum of weights, starting from -1 all the way to minus infinity. The expanded form of 420.75 in octal is:</p>
+<div class="highlight">
+    <pre tabindex="0" style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+        <code id="codeblock-1"><span style="display:flex;"><span>(644.6)~8~ = 6x8^2 + 4x8^1 + 4x8^0 + 6x8^-1</span></span></code>
+    </pre>
+    <button type="button" onclick="copyToClipboard(this,  1 )">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+            <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
+        </svg>
+    </button>
+</div><h3 id="how-do-you-convert-between-systems">How do you convert between systems?</h3>
+<p>You do something similar to a repeated division by the base, where the remainder is the <strong>equivalent digit</strong>, and the quotient is what you have to divide next. I&rsquo;ll convert <code>420.69~10</code> to octal so you can see it:</p>
+<div class="highlight">
+    <pre tabindex="0" style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+        <code id="codeblock-2"><span style="display:flex;"><span>     This 0 indicades our conversion is done
+</span></span><span style="display:flex;"><span>     |   6 / 8 = 0 + 6 remainder
+</span></span><span style="display:flex;"><span>     |   |    52 / 8 = 6 + 4 remainder
+</span></span><span style="display:flex;"><span>     |   |    |     420 / 8 = 52 + 4 remainder
+</span></span><span style="display:flex;"><span>     |   |    |     |
+</span></span><span style="display:flex;"><span>     v __v __ v __  v
+</span></span><span style="display:flex;"><span>     0 | 6 | 52 | 420 . 69
+</span></span><span style="display:flex;"><span>         6    4     4 . ...</span></span></code>
+    </pre>
+    <button type="button" onclick="copyToClipboard(this,  2 )">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+            <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
+        </svg>
+    </button>
+</div><p>A process similar to this is done when converting fractional parts, but instead of dividing, <em>we multiply by base</em>, and whatever number ends up as a whole number is the converted part. The fractional part of this new number is then truncated, and the process repeats.</p>
+<div class="highlight">
+    <pre tabindex="0" style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+        <code id="codeblock-3"><span style="display:flex;"><span>    Most of the time, fractionals aren&#39;t converted neatly
+</span></span><span style="display:flex;"><span>    in any system, unless they can be built with a fraction
+</span></span><span style="display:flex;"><span>    of the base. I. e. 1/8, 1/64, 1/512, etc.
+</span></span><span style="display:flex;"><span>                      0.16 * 8 = 1.28  |
+</span></span><span style="display:flex;"><span>                 0.52 * 8 = 4.16  |    |
+</span></span><span style="display:flex;"><span>            0.69 * 8 = 5.52  |    |    |
+</span></span><span style="display:flex;"><span>                        |    |    |    |
+</span></span><span style="display:flex;"><span>       __  __   __      v__  v__  v__  v__   __   __
+</span></span><span style="display:flex;"><span>     0 | 6 | 52 | 420 . 69| .52| .16| .28| .24| .92| ...
+</span></span><span style="display:flex;"><span>         6    4     4 . 5    4    1    2    1   ...</span></span></code>
+    </pre>
+    <button type="button" onclick="copyToClipboard(this,  3 )">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+            <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
+        </svg>
+    </button>
+</div><h2 id="operations">Operations</h2>
+<p>I&rsquo;ll just cover addtion and subtraction, which fortunately follow the same rules as operations in the decimal system. Sum the digits, starting from the least significant digits, and if their result is longer than a single unit, add the more significant digits over the next column. Just keep in mind we may have different coefficents, for example:</p>
+<div class="highlight">
+    <pre tabindex="0" style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+        <code id="codeblock-4"><span style="display:flex;"><span>Adding (13A.5B) + (4DE.95) in Hex:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      1 1     1 
+</span></span><span style="display:flex;"><span>      1 3 A . 5 B
+</span></span><span style="display:flex;"><span>    + 4 D E . 9 5
+</span></span><span style="display:flex;"><span>    -------------
+</span></span><span style="display:flex;"><span>      6 1 8 . F 0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Remembering that:
+</span></span><span style="display:flex;"><span>- (B + 5) = (10) = 16
+</span></span><span style="display:flex;"><span>- (5 + 9 + 1) = (F) = 15
+</span></span><span style="display:flex;"><span>- (A + E) = (18) = 24
+</span></span><span style="display:flex;"><span>- (3 + D + 1) = (11) = 17
+</span></span><span style="display:flex;"><span>- (1 + 4 + 1) = 6</span></span></code>
+    </pre>
+    <button type="button" onclick="copyToClipboard(this,  4 )">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+            <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
+        </svg>
+    </button>
+</div><p>Don&rsquo;t forget to ask for an the next significant digit to help with subtractions!</p>
+<div class="highlight">
+    <pre tabindex="0" style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+        <code id="codeblock-5"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Subtracting (4DE.95) from (13A.5B) in Hex:
+</span></span><span style="display:flex;"><span>      ,       ,
+</span></span><span style="display:flex;"><span>      4 D E . 9 5
+</span></span><span style="display:flex;"><span>    - 1 F A . 5 B
+</span></span><span style="display:flex;"><span>    -------------
+</span></span><span style="display:flex;"><span>      2 C 4 . 3 9
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Remembering that:
+</span></span><span style="display:flex;"><span>- (5 &lt; B) so we do (15 - B = 9) instead
+</span></span><span style="display:flex;"><span>- (D &lt; F) so we do (1D - F = C) instead</span></span></code>
+    </pre>
+    <button type="button" onclick="copyToClipboard(this,  5 )">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+            <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
+        </svg>
+    </button>
+</div><p>I used a colon to represent when we borrowed a digit, so we subtract 1 to that column aswell.</p>
+<p>The same mechanism you use to multiply numbers works here too, but you&rsquo;ll probably need to have a multiplication table in hand. Same with division.</p>
+<h2 id="but-wait-theres-more">But wait, there&rsquo;s more!</h2>
+<p>Which unfortunately I can&rsquo;t go over anymore, otherwise this post ends in draft limbo. Feel free to search any digital systems book to help you learn about the topic.</p>
+<p>Here&rsquo;s the stuff which I couldn&rsquo;t fit in because of time:</p>
+<ul>
+<li>Complement to base and complement to base - 1</li>
+<li>Negative numbers represented with sign and complement</li>
+<li>Numeric codes
+<ul>
+<li>BCD</li>
+<li>XS3</li>
+<li>84-2-1</li>
+<li>2421</li>
+</ul>
+</li>
+<li>Gray Code</li>
+</ul>
+<p>All of these topics are useful when designing a system using binary, because we only have to digits to work with. That means we can take shortcuts when performing these operations. For example, the complement of a binary number can be obtained <em>just by flipping the bits, then adding 1!</em> Isn&rsquo;t that amazing?</p>
+<p>That would be everything for today. I apologize for the lack of PI posting. Good night!</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>The only counting system actually used to represent numbers. But Octal and Hex are used to simplify binary sequences.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Hex can be also abrreviated with the letter &ldquo;H&rdquo;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</article>
+    </main>

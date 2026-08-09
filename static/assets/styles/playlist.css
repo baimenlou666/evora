@@ -1,0 +1,68 @@
+#playlist-container {
+    padding: 1rem;
+    background-color: var(--orange-700);
+    box-shadow: 0.5rem 0.5rem var(--orange-900);
+    border-radius: 0.5rem;
+}
+
+#playlist-container > * {
+    max-width: 100%;
+}
+
+#playlist-container select {
+    background-color: var(--blue-900);
+    color: var(--gray-800);
+    font-family: var(--heading-font);
+}
+
+#select-song option {
+    color: var(--orange-600);
+    width: 100%;
+}
+
+#playlist-container .inline-list {
+    justify-content: center;
+}
+
+#playlist-container .inline-list > * {
+    margin-inline: 0.5rem;
+    margin-block: 0.5rem;
+}
+
+#playing-mode {
+    width: calc( 100% - 7rem ) ;
+}
+
+/* Action buttons */
+#playlist-container button {
+    width: 2rem;
+    aspect-ratio: 1;
+    background-color: transparent;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    transition: 200ms;
+
+    border: 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.4rem var(--gray-300);
+    background-color: var(--gray-600);
+}
+
+#playlist-container button#btn-prev {
+    background-image: url('/icons/skip_previous.png');
+}
+
+#playlist-container button#btn-pause-play[data-playing="false"] {
+    background-image: url('/icons/play.png');
+}
+
+#playlist-container button#btn-pause-play[data-playing="true"] {
+    background-image: url('/icons/pause.png');
+    background-color: var(--gray-500);
+}
+
+#playlist-container button#btn-next {
+    background-image: url('/icons/skip_next.png');
+}

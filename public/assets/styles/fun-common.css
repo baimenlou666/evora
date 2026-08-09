@@ -1,0 +1,13 @@
+#goback {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+
+    width: 3rem;
+    padding: 0;
+    border-radius: 50%;
+    aspect-ratio: 1;
+
+    background-color: var(--orange-400);
+    cursor: pointer;
+}
